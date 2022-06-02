@@ -1,0 +1,52 @@
+# This "input" configures a global authorization rule to enable public access to
+# all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
+
+type User
+  @model
+  {
+    id: ID!
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+    username: String! @index(name: "byUser", queryField: "userByUsername")
+    email: String 
+    displayName: String 
+    photo: String
+    conversations: [Conversation] @hasMany(indexName: "byConvoOwner", fields: ["username"])
+  }
+
+type Conversation
+  @model
+  {
+    id: ID! 
+    createdAt: AWSDateTime!
+	  updatedAt: AWSDateTime!
+    name: String!
+    initiator: String
+    owner: String @index(name: "byConvoOwner", sortKeyFields: ["updatedAt"])
+    members: [String] 
+    membersUsers: [User] 
+    messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
+  }
+
+type Message 
+  @model 
+  {
+    id: ID!
+    conversationID: ID! @index(name: "byConversation", sortKeyFields: ["createdAt"])
+    author: User 
+    content: String!
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+  }
+
+type MemberFilter {
+  name: String!
+}
+
+type Subscription {
+  onConversationCreated: Conversation
+    @aws_subscribe(mutations: ["createConversation"])
+  onMessageCreated(conversationID: ID!): Message
+    @aws_subscribe(mutations: ["createMessage"])
+}
