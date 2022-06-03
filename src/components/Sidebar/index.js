@@ -5,45 +5,64 @@ import Toolbar from 'components/Toolbar';
 import { SettingsMenu } from "./SettingsMenu"
 import { UserList } from "./UserList"
 import './sidebar.css';
-import { API, graphqlOperation } from 'aws-amplify'
+import { API } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
-import { listConversations as GetConversations } from "graphql/queries"
-import { onConversationCreated } from "graphql/subscriptions"
+import { 
+  onUserConversationCreate,
+  onUserConversationDelete,
+} from "graphql/subscriptions"
 
 export default function Sidebar(props) {
   const messenger = useContext(MessengerContext)
   const [conversations, setConversations] = useState([]);
   const [active, setActive] = useState(0)
-  
+  const userEmail = messenger?.data?.user?.attributes?.email
+  const myId = messenger?.data?.user?.me?.id
 
   useEffect(() => {
-    fetchRooms(messenger?.data?.user?.username);
+    if(conversations?.length <= 0 && messenger?.data?.user?.me?.conversations?.items?.length > 0) {
+      let items = messenger?.data?.user?.me?.conversations?.items
+      let sorted = items.sort(function(a, b) {
+        var c = new Date(a.updatedAt);
+        var d = new Date(b.updatedAt);
+        return c-d;
+      });
+      setConversations(sorted.reverse())
+    }
+  }, [messenger?.data])
+
+  useEffect(() => {
+    if(conversations?.length > 0) {
+      messenger?.setCurrentConvo(conversations[0])
+    }
+  }, [conversations])
+
+  useEffect(() => {
     let subscription = API.graphql({
-      query: onConversationCreated
+      query: onUserConversationCreate,
+      variables: { email: userEmail }
     })
     .subscribe({
       next: roomData => {
-        console.log('onConversationCreated subscription')
-        console.log({ roomData });
-        if(roomData?.value?.data?.onConversationCreated?.members?.includes(messenger?.data?.user?.username)) {
-          setConversations(prevState => prevState.concat([roomData?.value?.data?.onConversationCreated]))
-        }
+        setConversations(prevState => ([roomData?.value?.data?.onUserConversationCreate, ...prevState]))
       }
     })
-    return () => subscription.unsubscribe();
-  }, []);
 
-  async function fetchRooms(username) {
-    try {
-      const convos = await API.graphql(graphqlOperation(GetConversations, { filter: { members: { contains: username } } }))
-      console.log('convos', convos)
-      if(convos?.data?.listConversations?.items?.length > 0) {
-        setConversations(convos?.data?.listConversations?.items)
+    let subDelete = API.graphql({
+      query: onUserConversationDelete,
+      variables: { email: userEmail }
+    })
+    .subscribe({
+      next: roomData => {
+        let convo = roomData?.value?.data?.onUserConversationDelete
+        setConversations(prevState => prevState?.filter((f) => f?.id !== convo?.id ))
       }
-    } catch (err) {
-      console.log('error: ', err)
+    })
+    return () => {
+      subscription.unsubscribe();
+      subDelete.unsubscribe();
     }
-  }
+  }, []);
 
   return (
     <div className="conversation-list">
@@ -60,18 +79,23 @@ export default function Sidebar(props) {
         <Search />
       </div>
       {
-        conversations.map((conversation, i) =>
-          <ConversationItem
-            key={conversation.createdAt}
-            me={messenger?.data?.user?.username}
-            active={i === active}
-            data={conversation}
-            onClick={() => {
-              setActive(i)
-              messenger?.setCurrentConvo(conversation?.id)
-            }}
-          />
-        )
+        conversations.map((conversation, i) => {
+          let recent = conversation?.recentMessage
+          let text = `${recent?.authorId === myId ? 'You: ' : ''} ${recent?.content}`
+          return (
+            <ConversationItem
+              key={conversation.id}
+              me={userEmail}
+              active={i === active}
+              data={{ ...conversation, text}}
+              showOptions={true}
+              onClick={() => {
+                setActive(i)
+                messenger?.setCurrentConvo(conversation)
+              }}
+            />
+          )
+        })
       }
     </div>
   );

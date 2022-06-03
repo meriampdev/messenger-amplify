@@ -1,26 +1,63 @@
 import React, {useEffect, useState, useContext} from 'react';
+import './conversation.css';
 import Compose from 'components/Compose';
 import Toolbar from 'components/Toolbar';
 import ToolbarButton from 'components/ToolbarButton';
 import Message from 'components/Message';
 import moment from 'moment';
+import { API, graphqlOperation } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
-import './conversation.css';
+import { createMessage } from "graphql/mutations"
+import { getConversation } from "graphql/queries"
+import { onMessageCreated } from "graphql/subscriptions"
 
 export default function Conversation(props) {
   const messenger = useContext(MessengerContext)
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    if(messenger?.data?.currentConvo) {
-      getMessages();
+    let subscription
+    if(messenger?.data?.currentConvo?.conversationId) {
+      console.log('conversation ID', messenger?.data?.currentConvo?.conversationId)
+      getMessages()
+      subscription = API.graphql({
+        query: onMessageCreated,
+        variables: {
+          conversationId: messenger?.data?.currentConvo?.conversationId 
+        }
+      })
+      .subscribe({
+        next: messageData => {
+          setMessages(prev => [ ...prev, messageData?.value?.data?.onMessageCreated ])
+        }
+      })
     }
-  // eslint-disable-next-line
-  },[messenger?.data?.currentConvo])
-
-  
-  const getMessages = () => {
     
+    return () => subscription && subscription.unsubscribe();
+  }, [messenger?.data?.currentConvo?.conversationId]);
+
+  const getMessages = async () => {
+    let res = await  API.graphql(graphqlOperation(getConversation, { id: messenger?.data?.currentConvo?.conversationId }))
+    let items = res?.data?.getConversation?.messages?.items ?? []
+    console.log('--- items', items)
+    if(items?.length > 0) {
+      setMessages(items)
+    }
+  }
+
+  const handleSend = async (content) => {
+    const messageData = {
+      conversationId: messenger?.data?.currentConvo?.conversationId,
+      content: content,
+      type: "text",
+      authorId: messenger?.data?.user?.me?.id
+    }
+
+    try {
+      const message = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
+    } catch(e) {
+      console.log('error create message', e)
+    }
   }
 
   const renderMessages = () => {
@@ -34,8 +71,8 @@ export default function Conversation(props) {
       let previous = messages[i - 1];
       let current = messages[i];
       let next = messages[i + 1];
-      let isMine = current.sentBy === messenger?.data?.user?.email;
-      let currentMoment = moment(current.sentAt);
+      let isMine = current.authorId === messenger?.data?.user?.me?.id;
+      let currentMoment = moment(current.createdAt);
       let prevBySameAuthor = false;
       let nextBySameAuthor = false;
       let startsSequence = true;
@@ -43,9 +80,9 @@ export default function Conversation(props) {
       let showTimestamp = true;
 
       if (previous) {
-        let previousMoment = moment(previous.sentAt);
+        let previousMoment = moment(previous.createdAt);
         let previousDuration = moment.duration(currentMoment.diff(previousMoment));
-        prevBySameAuthor = previous.author === current.author;
+        prevBySameAuthor = previous.authorId === current.authorId;
         
         if (prevBySameAuthor && previousDuration.as('hours') < 1) {
           startsSequence = false;
@@ -57,9 +94,9 @@ export default function Conversation(props) {
       }
 
       if (next) {
-        let nextMoment = moment(next.sentAt);
+        let nextMoment = moment(next.createdAt);
         let nextDuration = moment.duration(nextMoment.diff(currentMoment));
-        nextBySameAuthor = next.author === current.author;
+        nextBySameAuthor = next.authorId === current.authorId;
 
         if (nextBySameAuthor && nextDuration.as('hours') < 1) {
           endsSequence = false;
@@ -93,19 +130,18 @@ export default function Conversation(props) {
         <Toolbar
           className="with-shadow"
           title=""
-          rightItems={[
-            <ToolbarButton key="info" icon="ion-ios-information-circle-outline" />,
-            <ToolbarButton key="video" icon="ion-ios-videocam" />,
-            <ToolbarButton key="phone" icon="ion-ios-call" />
-          ]}
+          rightItems={[<ToolbarButton key="info" icon="ion-ios-information-circle-outline" />]}
         />
 
         <div className="message-list-container">{renderMessages()}</div>
 
-        <Compose rightItems={[
-          <ToolbarButton key="image" icon="ion-ios-images" />,
-          <ToolbarButton key="emoji" icon="ion-ios-happy" />
-        ]}/>
+        <Compose 
+          handleSend={handleSend}
+          rightItems={[
+            <ToolbarButton key="image" icon="ion-ios-images" />,
+            <ToolbarButton key="emoji" icon="ion-ios-happy" />
+          ]}
+        />
       </div>
     );
 }

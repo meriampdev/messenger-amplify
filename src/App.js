@@ -4,15 +4,20 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import "@aws-amplify/ui-react/styles.css";
 import { Auth, Hub } from 'aws-amplify';
 import { Route, Routes } from 'react-router-dom';
+import { UserActionsProvider } from "context/useractions"
 import { MessengerProvider } from "context/messenger"
 import Messenger from "components/Messenger"
+import { Profile } from "components/Profile"
 
 function Router(user) {
   return (
     <MessengerProvider user={user} >
+      <UserActionsProvider>
         <Routes>
           <Route exact path="/" element={<Messenger />} />
+          <Route exact path="/profile" element={<Profile />} />
         </Routes>
+      </UserActionsProvider>
     </MessengerProvider>
   )
 }

@@ -11,30 +11,32 @@ export const MessengerProvider = ({ user, children }) => {
 
   useEffect(() => {
     if(user?.user?.username) {
-      let email = user?.user?.username 
-      checkIfUserExists(email)
+      let username = user?.user?.username 
+      let email = user?.user?.attributes?.email
+      checkIfUserExists(username, email)
     }
   }, [])
 
-  const checkIfUserExists = async (username) => {
+  const checkIfUserExists = async (username, email) => {
     try {
       // await API.graphql(graphqlOperation(deleteUser, { input: { id:  }, filter: { username: { eq: username } } }))
-      const _user = await API.graphql(graphqlOperation(GetUser, { filter: { username: { eq: username } } }))
+      const _user = await API.graphql(graphqlOperation(GetUser, { filter: { email: { eq: email } } }))
       const { listUsers } = _user?.data
       if (!listUsers || listUsers?.items?.length <= 0) {
         console.log('will create')
-        createUser(username)
+        createUser(username, email)
       } else {
-        console.log('me:', listUsers)
+        let me = listUsers?.items[0]
+        setUserData(prevState => ({ ...prevState, me: me }))
       }
     } catch (err) {
       console.log('error fetching user: ', err)
     }
   }
 
-  const createUser = async (username) => {
+  const createUser = async (username, email) => {
     try {
-      await API.graphql(graphqlOperation(createUserMutation, { input: { username } }))
+      await API.graphql(graphqlOperation(createUserMutation, { input: { username, email } }))
     } catch (err) {
       console.log('Error creating user! :', err)
     }

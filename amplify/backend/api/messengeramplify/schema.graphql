@@ -9,44 +9,106 @@ type User
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
     username: String! @index(name: "byUser", queryField: "userByUsername")
-    email: String 
+    email: String @index(name: "byEmail", queryField: "userByEmail")
     displayName: String 
     photo: String
-    conversations: [Conversation] @hasMany(indexName: "byConvoOwner", fields: ["username"])
+    conversations: [UserConversation] @hasMany(indexName: "convoByEmail", fields: ["email"])
+  }
+
+type UserConversation
+  @model {
+    id: ID!
+    createdAt: AWSDateTime!
+	  updatedAt: AWSDateTime!
+    email: String! @index(name: "convoByEmail", sortKeyFields: ["updatedAt"])
+    displayName: String 
+    photo: String 
+    conversationId: ID!
+    conversation: Conversation @hasOne(fields: ["conversationId"])
+    recentMessageId: ID
+    recentMessage: Message @hasOne(fields: ["recentMessageId"])
   }
 
 type Conversation
-  @model
-  {
+  @model {
     id: ID! 
     createdAt: AWSDateTime!
 	  updatedAt: AWSDateTime!
-    name: String!
+    name: String
     initiator: String
-    owner: String @index(name: "byConvoOwner", sortKeyFields: ["updatedAt"])
     members: [String] 
-    membersUsers: [User] 
     messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
+    recentMessageId: ID
   }
 
 type Message 
-  @model 
-  {
+  @model {
     id: ID!
-    conversationID: ID! @index(name: "byConversation", sortKeyFields: ["createdAt"])
-    author: User 
+    conversationId: ID! @index(name: "byConversation", sortKeyFields: ["createdAt"])
+    authorId: ID!
+    author: User @hasOne(fields: ["authorId"])
     content: String!
+    type: String!
+    read: Boolean
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
   }
 
-type MemberFilter {
-  name: String!
+input StringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
 }
 
+input IDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+}
+
+input ConversationFilterInput {
+  id: IDInput
+  createdAt: StringInput
+  updatedAt: StringInput
+  conversationId: IDInput
+  and: [ConversationFilterInput]
+  or: [ConversationFilterInput]
+  not: ConversationFilterInput
+}
+
+type Mutation {
+  deleteUserConversationWhere(filter: ConversationFilterInput!): UserConversation
+  deleteMessagesWhere(filter: ConversationFilterInput!): Message
+}
+
+
 type Subscription {
+  onUserConversationCreate(email: String): UserConversation
+    @aws_subscribe(mutations: ["createUserConversation"])
+  onUserConversationUpdate(email: String): UserConversation
+    @aws_subscribe(mutations: ["updateUserConversation"])
+  onUserConversationDelete(email: String): UserConversation
+    @aws_subscribe(mutations: ["deleteUserConversation"])
   onConversationCreated: Conversation
     @aws_subscribe(mutations: ["createConversation"])
-  onMessageCreated(conversationID: ID!): Message
+  onConversationUpdated(id: ID!): Conversation
+    @aws_subscribe(mutations: ["updateConversation"])
+  onMessageCreated(conversationId: ID!): Message
     @aws_subscribe(mutations: ["createMessage"])
 }

@@ -1,17 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './compose.css';
-import { MessengerContext } from "context/messenger"
 
 export default function Compose(props) {
-  const messenger = useContext(MessengerContext)
   const [message, setMessage] = useState("")
 
   const onSend = () => {
-    let messageObj = {
-      text: message,
-      sentAt: new Date().getTime(),
-      sentBy: messenger?.data?.user?.email
-    }
+    props.handleSend(message)
+    setMessage("")
   }
 
   const onKeyUp = (e) => {

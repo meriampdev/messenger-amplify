@@ -39,11 +39,9 @@ const ConfigWrapper = ({ children }) => {
   let authPool = localStorage.getItem("auth-pool")
   if(authPool) {
     if(authPool === "admin") {
-      console.log('adminConfig here', adminConfig)
       Amplify.configure(adminConfig)
       API.configure(adminConfig)
     } else {
-      console.log('companyConfig here', companyConfig)
       Amplify.configure(companyConfig)
       API.configure(companyConfig)
     }
@@ -61,11 +59,9 @@ const Choose = () => {
   const onRoute = (app) => {
     if(app === "admin") {
       localStorage.setItem("auth-pool", "admin")
-      console.log('adminConfig', adminConfig)
       Amplify.configure(adminConfig)
       API.configure(adminConfig)
     } else {
-      console.log('companyConfig here', companyConfig)
       localStorage.setItem("auth-pool", "company")
       Amplify.configure(companyConfig)
       API.configure(companyConfig)
