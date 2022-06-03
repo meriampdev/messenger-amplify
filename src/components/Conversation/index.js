@@ -18,7 +18,6 @@ export default function Conversation(props) {
   useEffect(() => {
     let subscription
     if(messenger?.data?.currentConvo?.conversationId) {
-      console.log('conversation ID', messenger?.data?.currentConvo?.conversationId)
       getMessages()
       subscription = API.graphql({
         query: onMessageCreated,
@@ -34,12 +33,13 @@ export default function Conversation(props) {
     }
     
     return () => subscription && subscription.unsubscribe();
+
+  // eslint-disable-next-line
   }, [messenger?.data?.currentConvo?.conversationId]);
 
   const getMessages = async () => {
     let res = await  API.graphql(graphqlOperation(getConversation, { id: messenger?.data?.currentConvo?.conversationId }))
     let items = res?.data?.getConversation?.messages?.items ?? []
-    console.log('--- items', items)
     if(items?.length > 0) {
       setMessages(items)
     }
@@ -54,7 +54,7 @@ export default function Conversation(props) {
     }
 
     try {
-      const message = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
+      API.graphql(graphqlOperation(createMessage, { input: messageData }))
     } catch(e) {
       console.log('error create message', e)
     }

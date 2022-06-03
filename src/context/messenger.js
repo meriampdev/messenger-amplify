@@ -7,14 +7,15 @@ export const MessengerContext = createContext(null);
 
 export const MessengerProvider = ({ user, children }) => {
   const [currentConvo, setConvoId] = useState("");
-  const [userData, setUserData] = useState(user?.user)
+  const [userData, setUserData] = useState(user)
 
   useEffect(() => {
-    if(user?.user?.username) {
-      let username = user?.user?.username 
-      let email = user?.user?.attributes?.email
+    if(user?.username) {
+      let username = user?.username 
+      let email = user?.attributes?.email
       checkIfUserExists(username, email)
     }
+  // eslint-disable-next-line
   }, [])
 
   const checkIfUserExists = async (username, email) => {

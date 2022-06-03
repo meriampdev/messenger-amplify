@@ -29,12 +29,14 @@ export default function Sidebar(props) {
       });
       setConversations(sorted.reverse())
     }
+  // eslint-disable-next-line
   }, [messenger?.data])
 
   useEffect(() => {
     if(conversations?.length > 0) {
       messenger?.setCurrentConvo(conversations[0])
     }
+  // eslint-disable-next-line
   }, [conversations])
 
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function Sidebar(props) {
       subscription.unsubscribe();
       subDelete.unsubscribe();
     }
-  }, []);
+  }, [userEmail]);
 
   return (
     <div className="conversation-list">
