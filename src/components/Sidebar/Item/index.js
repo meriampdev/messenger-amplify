@@ -3,6 +3,7 @@ import './item.css';
 import {
   Box, 
   Icon,
+  Avatar,
   useDisclosure
 } from '@chakra-ui/react'
 import { SmallCloseIcon } from "@chakra-ui/icons"
@@ -12,7 +13,7 @@ import { Alert } from "components/Alert"
 
 export default function ConversationItem(props) {
   const { showOptions } = props
-  const { photo, displayName, text, id } = props.data;
+  const { displayName, text, id } = props.data;
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleDelete = async (e) => {
@@ -31,7 +32,12 @@ export default function ConversationItem(props) {
       onClick={props?.onClick}
       className={`conversation-list-item ${props.active ? 'active': ''}`}
     >
-      <img className="conversation-photo" src={photo ?? "https://picsum.photos/200/300?random=1"} alt="conversation" />
+      {/* <img className="conversation-photo" src={photo ?? "https://picsum.photos/200/300?random=1"} alt="conversation" /> */}
+      <Avatar 
+        name={displayName}
+        className="conversation-photo"
+        position="unset"
+      />
       <div className="conversation-info">
         <h1 className="conversation-title">{ displayName }</h1>
         <p className="conversation-snippet">{ text }</p>

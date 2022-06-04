@@ -22,13 +22,13 @@ const companyConfig = {
   "aws_user_pools_id": process.env.REACT_APP_COMPANY_USER_POOL_ID
 }
 
-export const Login = () => {
+export const Login = ({ authListen }) => {
   const [authPool, setAuthPool] = useState("")
 
   useEffect(() => {
     let authPool = localStorage.getItem("auth-pool")
     if(!!authPool) {
-      setAuthPool(authPool)
+      
 
       if(authPool === "admin") {
         Amplify.configure(adminConfig)
@@ -37,11 +37,20 @@ export const Login = () => {
         Amplify.configure(companyConfig)
         API.configure(companyConfig)
       }
+      
+      authListen()
+      setTimeout(() => {
+        setAuthPool(authPool)
+      }, 50)
     }
+  // eslint-disable-next-line
   }, [])
 
   const handleSetAuthRole = (role) => {
-    setAuthPool(role)
+    authListen()
+    setTimeout(() => {
+      setAuthPool(role)
+    }, 50)
   }
 
   if(!authPool) {

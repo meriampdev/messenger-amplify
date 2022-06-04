@@ -20,6 +20,7 @@ export const Profile = () => {
   const navigage = useNavigate()
   const messenger = useContext(MessengerContext)
   const { me } = messenger?.data?.user
+  // eslint-disable-next-line
   const [file, setFile] = useState(null)
   const [previewString, setPreview] = useState(null)
 

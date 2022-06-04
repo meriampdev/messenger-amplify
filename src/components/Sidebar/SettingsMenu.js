@@ -1,5 +1,7 @@
 import { useContext } from "react"
 import {
+  Avatar,
+  Box,
   Menu,
   MenuButton,
   MenuList,
@@ -27,10 +29,14 @@ export const SettingsMenu = () => {
   return (
     <Authenticator signUpAttributes={[]}>
       {({ signOut, user }) => (
-        <>
-          <Menu>
+        <Box pos="relative" zIndex={1000000000}>
+          <Menu zIndex={1000000000}>
             <MenuButton>
-              <img className="conversation-photo" src="https://picsum.photos/200/300" alt="conversation" />
+              {/* <img className="conversation-photo" src="https://picsum.photos/200/300" alt="conversation" /> */}
+              <Avatar 
+                name={messenger?.data?.user?.username}
+                className="conversation-photo"
+              />
             </MenuButton>
             <MenuList>
               <MenuGroup title={ user && user.username }>
@@ -51,7 +57,7 @@ export const SettingsMenu = () => {
             actionText="Delete"
             okHandler={() => handleDelete(signOut)}
           />
-        </>
+        </Box>
       )}
     </Authenticator>
     

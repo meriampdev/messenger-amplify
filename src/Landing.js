@@ -17,18 +17,23 @@ export default function Landing() {
         .catch((e) => {
           console.log('No signed in user.', e)
         });
-        Hub.listen('auth', data => {
-        switch (data.payload.event) {
-          case 'signIn':
-            return updateUser(data.payload.data);
-          case 'signOut':
-            return updateUser(null);
-          default: break;
-        }
-      });
+        
+      authListen()
     }
     
   }, []);
+
+  const authListen = () => {
+    Hub.listen('auth', data => {
+      switch (data.payload.event) {
+        case 'signIn':
+          return updateUser(data.payload.data);
+        case 'signOut':
+          return updateUser(null);
+        default: break;
+      }
+    });
+  }
 
   if (user) {
     return (
@@ -45,5 +50,5 @@ export default function Landing() {
     )
   }
 
-  return <Login />
+  return <Login authListen={authListen} />
 }
