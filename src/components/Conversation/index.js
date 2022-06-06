@@ -7,8 +7,8 @@ import Message from 'components/Message';
 import moment from 'moment';
 import { API, graphqlOperation } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
-import { createMessage, updateUserConversation } from "graphql/mutations"
-import { getConversation } from "graphql/queries"
+import { createMessage, updateConversation } from "graphql/mutations"
+import { getUserConversation } from "graphql/queries"
 import { onMessageCreated } from "graphql/subscriptions"
 
 export default function Conversation(props) {
@@ -38,8 +38,9 @@ export default function Conversation(props) {
   }, [messenger?.data?.currentConvo?.conversationId]);
 
   const getMessages = async () => {
-    let res = await  API.graphql(graphqlOperation(getConversation, { id: messenger?.data?.currentConvo?.conversationId }))
-    let items = res?.data?.getConversation?.messages?.items ?? []
+    let res = await  API.graphql(graphqlOperation(getUserConversation, { id: messenger?.data?.currentConvo?.id }))
+    console.log('res', res)
+    let items = res?.data?.getUserConversation?.messages?.items ?? []
     if(items?.length > 0) {
       setMessages(items)
     }
@@ -55,8 +56,11 @@ export default function Conversation(props) {
 
     try {
       let newmessage = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
-      let payload = { id: messenger?.data?.currentConvo?.id, recentMessageId: newmessage?.data?.createMessage?.id }
-      await API.graphql(graphqlOperation(updateUserConversation, { input: payload }))
+      let payload = { 
+        id: messenger?.data?.currentConvo?.conversationId, 
+        recentMessageId: newmessage?.data?.createMessage?.id 
+      }
+      await API.graphql(graphqlOperation(updateConversation, { input: payload }))
     } catch(e) {
       console.log('error create message', e)
     }

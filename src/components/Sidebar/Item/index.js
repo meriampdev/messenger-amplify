@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './item.css';
 import {
   Box, 
@@ -7,14 +7,35 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { SmallCloseIcon } from "@chakra-ui/icons"
+import { Alert } from "components/Alert"
 import { API, graphqlOperation } from 'aws-amplify';
 import { deleteUserConversation } from "graphql/mutations"
-import { Alert } from "components/Alert"
+import { onUpdateConversation } from "graphql/subscriptions"
 
 export default function ConversationItem(props) {
   const { showOptions } = props
-  const { displayName, text, id } = props.data;
+  const { displayName, id, conversation } = props.data;
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [recent, setRecent] = useState(conversation?.recentMessage?.content)
+
+  useEffect(() => {
+    let subscription = API.graphql({
+      query: onUpdateConversation,
+      variables: {
+        id: conversation?.id 
+      }
+    })
+    .subscribe({
+      next: messageData => {
+        const { id, recentMessage } = messageData?.value?.data?.onUpdateConversation
+        if(conversation?.id === id) {
+          setRecent(recentMessage?.content)
+        } 
+      }
+    })
+
+    return () => subscription && subscription.unsubscribe();
+  }, [conversation])
 
   const handleDelete = async (e) => {
     e?.stopPropagation()
@@ -42,7 +63,7 @@ export default function ConversationItem(props) {
         <Box 
           as="p"
           className="conversation-snippet" 
-          dangerouslySetInnerHTML={{ __html: text }}
+          dangerouslySetInnerHTML={{ __html: recent }}
         />
       </div>
       {showOptions && 

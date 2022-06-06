@@ -18,6 +18,13 @@
   display: flex;
 }
 
+.reaction-button {
+  visibility: hidden;
+}
+.message .bubble-container:hover .reaction-button {
+  visibility: visible;
+}
+
 .message.mine .bubble-container {
   justify-content: flex-end;
 }
@@ -61,4 +68,20 @@
   border-bottom-left-radius: 20px;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
+}
+
+.reaction {
+  color: #e2e2e2;
+  font-size: 20px;
+  transition: all 0.1s;
+}
+
+.reaction:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.reaction:active {
+  color: #1cbf73;
+  opacity: 0.25;
 }

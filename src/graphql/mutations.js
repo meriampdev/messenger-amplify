@@ -18,62 +18,30 @@ export const deleteUserConversationWhere = /* GraphQL */ `
         name
         initiator
         members
-        messages {
-          items {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         recentMessageId
-      }
-      recentMessageId
-      recentMessage {
-        id
-        conversationId
-        authorId
-        author {
+        recentMessage {
           id
+          conversationId
+          authorId
+          content
+          type
+          read
           createdAt
           updatedAt
-          username
-          email
-          displayName
-          photo
-          conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              recentMessageId
-            }
-            nextToken
-          }
         }
-        content
-        type
-        read
-        createdAt
-        updatedAt
+      }
+      messages {
+        items {
+          id
+          conversationId
+          authorId
+          content
+          type
+          read
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -83,6 +51,17 @@ export const deleteMessagesWhere = /* GraphQL */ `
     deleteMessagesWhere(filter: $filter) {
       id
       conversationId
+      reactions {
+        items {
+          id
+          messageId
+          authorId
+          reaction
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       authorId
       author {
         id
@@ -93,35 +72,6 @@ export const deleteMessagesWhere = /* GraphQL */ `
         displayName
         photo
         conversations {
-          items {
-            id
-            createdAt
-            updatedAt
-            email
-            displayName
-            photo
-            conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-            }
-            recentMessageId
-            recentMessage {
-              id
-              conversationId
-              authorId
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-          }
           nextToken
         }
       }
@@ -155,38 +105,6 @@ export const createUser = /* GraphQL */ `
           displayName
           photo
           conversationId
-          conversation {
-            id
-            createdAt
-            updatedAt
-            name
-            initiator
-            members
-            messages {
-              nextToken
-            }
-            recentMessageId
-          }
-          recentMessageId
-          recentMessage {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
         }
         nextToken
       }
@@ -215,38 +133,6 @@ export const updateUser = /* GraphQL */ `
           displayName
           photo
           conversationId
-          conversation {
-            id
-            createdAt
-            updatedAt
-            name
-            initiator
-            members
-            messages {
-              nextToken
-            }
-            recentMessageId
-          }
-          recentMessageId
-          recentMessage {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
         }
         nextToken
       }
@@ -275,38 +161,6 @@ export const deleteUser = /* GraphQL */ `
           displayName
           photo
           conversationId
-          conversation {
-            id
-            createdAt
-            updatedAt
-            name
-            initiator
-            members
-            messages {
-              nextToken
-            }
-            recentMessageId
-          }
-          recentMessageId
-          recentMessage {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
         }
         nextToken
       }
@@ -333,62 +187,30 @@ export const createUserConversation = /* GraphQL */ `
         name
         initiator
         members
-        messages {
-          items {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         recentMessageId
-      }
-      recentMessageId
-      recentMessage {
-        id
-        conversationId
-        authorId
-        author {
+        recentMessage {
           id
+          conversationId
+          authorId
+          content
+          type
+          read
           createdAt
           updatedAt
-          username
-          email
-          displayName
-          photo
-          conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              recentMessageId
-            }
-            nextToken
-          }
         }
-        content
-        type
-        read
-        createdAt
-        updatedAt
+      }
+      messages {
+        items {
+          id
+          conversationId
+          authorId
+          content
+          type
+          read
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -413,62 +235,30 @@ export const updateUserConversation = /* GraphQL */ `
         name
         initiator
         members
-        messages {
-          items {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         recentMessageId
-      }
-      recentMessageId
-      recentMessage {
-        id
-        conversationId
-        authorId
-        author {
+        recentMessage {
           id
+          conversationId
+          authorId
+          content
+          type
+          read
           createdAt
           updatedAt
-          username
-          email
-          displayName
-          photo
-          conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              recentMessageId
-            }
-            nextToken
-          }
         }
-        content
-        type
-        read
-        createdAt
-        updatedAt
+      }
+      messages {
+        items {
+          id
+          conversationId
+          authorId
+          content
+          type
+          read
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -493,62 +283,30 @@ export const deleteUserConversation = /* GraphQL */ `
         name
         initiator
         members
-        messages {
-          items {
-            id
-            conversationId
-            authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-            }
-            content
-            type
-            read
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         recentMessageId
-      }
-      recentMessageId
-      recentMessage {
-        id
-        conversationId
-        authorId
-        author {
+        recentMessage {
           id
+          conversationId
+          authorId
+          content
+          type
+          read
           createdAt
           updatedAt
-          username
-          email
-          displayName
-          photo
-          conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              recentMessageId
-            }
-            nextToken
-          }
         }
-        content
-        type
-        read
-        createdAt
-        updatedAt
+      }
+      messages {
+        items {
+          id
+          conversationId
+          authorId
+          content
+          type
+          read
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
     }
   }
@@ -565,32 +323,29 @@ export const createConversation = /* GraphQL */ `
       name
       initiator
       members
-      messages {
-        items {
+      recentMessageId
+      recentMessage {
+        id
+        conversationId
+        reactions {
+          nextToken
+        }
+        authorId
+        author {
           id
-          conversationId
-          authorId
-          author {
-            id
-            createdAt
-            updatedAt
-            username
-            email
-            displayName
-            photo
-            conversations {
-              nextToken
-            }
-          }
-          content
-          type
-          read
           createdAt
           updatedAt
+          username
+          email
+          displayName
+          photo
         }
-        nextToken
+        content
+        type
+        read
+        createdAt
+        updatedAt
       }
-      recentMessageId
     }
   }
 `;
@@ -606,32 +361,29 @@ export const updateConversation = /* GraphQL */ `
       name
       initiator
       members
-      messages {
-        items {
+      recentMessageId
+      recentMessage {
+        id
+        conversationId
+        reactions {
+          nextToken
+        }
+        authorId
+        author {
           id
-          conversationId
-          authorId
-          author {
-            id
-            createdAt
-            updatedAt
-            username
-            email
-            displayName
-            photo
-            conversations {
-              nextToken
-            }
-          }
-          content
-          type
-          read
           createdAt
           updatedAt
+          username
+          email
+          displayName
+          photo
         }
-        nextToken
+        content
+        type
+        read
+        createdAt
+        updatedAt
       }
-      recentMessageId
     }
   }
 `;
@@ -647,32 +399,29 @@ export const deleteConversation = /* GraphQL */ `
       name
       initiator
       members
-      messages {
-        items {
+      recentMessageId
+      recentMessage {
+        id
+        conversationId
+        reactions {
+          nextToken
+        }
+        authorId
+        author {
           id
-          conversationId
-          authorId
-          author {
-            id
-            createdAt
-            updatedAt
-            username
-            email
-            displayName
-            photo
-            conversations {
-              nextToken
-            }
-          }
-          content
-          type
-          read
           createdAt
           updatedAt
+          username
+          email
+          displayName
+          photo
         }
-        nextToken
+        content
+        type
+        read
+        createdAt
+        updatedAt
       }
-      recentMessageId
     }
   }
 `;
@@ -684,6 +433,17 @@ export const createMessage = /* GraphQL */ `
     createMessage(input: $input, condition: $condition) {
       id
       conversationId
+      reactions {
+        items {
+          id
+          messageId
+          authorId
+          reaction
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       authorId
       author {
         id
@@ -694,35 +454,6 @@ export const createMessage = /* GraphQL */ `
         displayName
         photo
         conversations {
-          items {
-            id
-            createdAt
-            updatedAt
-            email
-            displayName
-            photo
-            conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-            }
-            recentMessageId
-            recentMessage {
-              id
-              conversationId
-              authorId
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-          }
           nextToken
         }
       }
@@ -742,6 +473,17 @@ export const updateMessage = /* GraphQL */ `
     updateMessage(input: $input, condition: $condition) {
       id
       conversationId
+      reactions {
+        items {
+          id
+          messageId
+          authorId
+          reaction
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       authorId
       author {
         id
@@ -752,35 +494,6 @@ export const updateMessage = /* GraphQL */ `
         displayName
         photo
         conversations {
-          items {
-            id
-            createdAt
-            updatedAt
-            email
-            displayName
-            photo
-            conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-            }
-            recentMessageId
-            recentMessage {
-              id
-              conversationId
-              authorId
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-          }
           nextToken
         }
       }
@@ -800,6 +513,17 @@ export const deleteMessage = /* GraphQL */ `
     deleteMessage(input: $input, condition: $condition) {
       id
       conversationId
+      reactions {
+        items {
+          id
+          messageId
+          authorId
+          reaction
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       authorId
       author {
         id
@@ -810,41 +534,93 @@ export const deleteMessage = /* GraphQL */ `
         displayName
         photo
         conversations {
-          items {
-            id
-            createdAt
-            updatedAt
-            email
-            displayName
-            photo
-            conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-            }
-            recentMessageId
-            recentMessage {
-              id
-              conversationId
-              authorId
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-          }
           nextToken
         }
       }
       content
       type
       read
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMessageReaction = /* GraphQL */ `
+  mutation CreateMessageReaction(
+    $input: CreateMessageReactionInput!
+    $condition: ModelMessageReactionConditionInput
+  ) {
+    createMessageReaction(input: $input, condition: $condition) {
+      id
+      messageId
+      authorId
+      author {
+        id
+        createdAt
+        updatedAt
+        username
+        email
+        displayName
+        photo
+        conversations {
+          nextToken
+        }
+      }
+      reaction
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMessageReaction = /* GraphQL */ `
+  mutation UpdateMessageReaction(
+    $input: UpdateMessageReactionInput!
+    $condition: ModelMessageReactionConditionInput
+  ) {
+    updateMessageReaction(input: $input, condition: $condition) {
+      id
+      messageId
+      authorId
+      author {
+        id
+        createdAt
+        updatedAt
+        username
+        email
+        displayName
+        photo
+        conversations {
+          nextToken
+        }
+      }
+      reaction
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMessageReaction = /* GraphQL */ `
+  mutation DeleteMessageReaction(
+    $input: DeleteMessageReactionInput!
+    $condition: ModelMessageReactionConditionInput
+  ) {
+    deleteMessageReaction(input: $input, condition: $condition) {
+      id
+      messageId
+      authorId
+      author {
+        id
+        createdAt
+        updatedAt
+        username
+        email
+        displayName
+        photo
+        conversations {
+          nextToken
+        }
+      }
+      reaction
       createdAt
       updatedAt
     }

@@ -43,41 +43,47 @@ export default function Conversation(props) {
         return { members: { contains: member } }
       }) 
       let filters = { filter: { and: conditions } }
-      
+      console.log('filters', filters)
+
       const check = await API.graphql(graphqlOperation(listConversations, filters))
-      let conversation
+      let conversationId
+      let isExisting = false
+      console.log('check', check)
       if(check?.data?.listConversations?.items?.length <= 0) {
-        conversation = await API.graphql(graphqlOperation(createConversation, { input: convo }))
+        let conversation = await API.graphql(graphqlOperation(createConversation, { input: convo }))
+        conversationId = conversation?.data?.createConversation?.id
       } else {
+        isExisting = true
         let existing = check?.data?.listConversations?.items[0]
-        let payload = { ...convo, id: existing?.id }
-        conversation = await API.graphql(graphqlOperation(updateConversation, { input: payload }))
+        conversationId = existing?.id
       }
 
-      const conversationId = conversation?.data?.createConversation?.id ?? conversation?.data?.updateConversation?.id
       const messageData = {
         conversationId: conversationId,
         content: content,
         type: "text",
         authorId: messenger?.data?.user?.me?.id
       }
+      let message = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
+      let payload = { id: conversationId, recentMessageId: message?.data?.createMessage?.id }
+      API.graphql(graphqlOperation(updateConversation, { input: payload }))
 
-      const message = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
-
-      const linkToUsers = members.map((member) => {
-        let others = members.filter((f) => f !== member)
-        let nameArr = others?.map((other) => other?.split("@")[0])
-        let displayName = nameArr.join()
-        let input = {
-          conversationId: conversationId,
-          email: member,
-          displayName: displayName,
-          recentMessageId: message?.data?.createMessage?.id
-        }
-        return API.graphql(graphqlOperation(createUserConversation, { input: input }))
-      })
-      
-      await Promise.all(linkToUsers)
+      if(!isExisting) {
+        const linkToUsers = members.map((member) => {
+          let others = members.filter((f) => f !== member)
+          let nameArr = others?.map((other) => other?.split("@")[0])
+          let displayName = nameArr.join()
+          let input = {
+            conversationId: conversationId,
+            email: member,
+            displayName: displayName,
+          }
+          return API.graphql(graphqlOperation(createUserConversation, { input: input }))
+        })
+        
+        Promise.all(linkToUsers)
+      }
+     
       userAction.handleSetState({ createNewConvo: false })
     } catch (err) {
       console.log('error creating room: ', err);

@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext } from "react"
 import { API, graphqlOperation } from 'aws-amplify'
-import { listUsers as GetUser } from "graphql/queries"
+import { userByEmail as GetUser } from "graphql/queries"
 import { createUser as createUserMutation } from "graphql/mutations"
 
 export const MessengerContext = createContext(null);
@@ -20,14 +20,14 @@ export const MessengerProvider = ({ user, children }) => {
 
   const checkIfUserExists = async (username, email) => {
     try {
-      // await API.graphql(graphqlOperation(deleteUser, { input: { id:  }, filter: { username: { eq: username } } }))
-      const _user = await API.graphql(graphqlOperation(GetUser, { filter: { email: { eq: email } } }))
-      const { listUsers } = _user?.data
-      if (!listUsers || listUsers?.items?.length <= 0) {
+      const _user = await API.graphql(graphqlOperation(GetUser, { email }))
+      console.log('_user', _user)
+      const { userByEmail } = _user?.data
+      if (!userByEmail || userByEmail?.items?.length <= 0) {
         console.log('will create')
         createUser(username, email)
       } else {
-        let me = listUsers?.items[0]
+        let me = userByEmail?.items[0]
         setUserData(prevState => ({ ...prevState, me: me }))
       }
     } catch (err) {
@@ -37,7 +37,8 @@ export const MessengerProvider = ({ user, children }) => {
 
   const createUser = async (username, email) => {
     try {
-      await API.graphql(graphqlOperation(createUserMutation, { input: { username, email } }))
+      let me = await API.graphql(graphqlOperation(createUserMutation, { input: { username, email } }))
+      setUserData(prevState => ({ ...prevState, me: me?.data?.createUser }))
     } catch (err) {
       console.log('Error creating user! :', err)
     }

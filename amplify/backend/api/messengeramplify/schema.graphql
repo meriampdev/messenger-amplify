@@ -25,8 +25,7 @@ type UserConversation
     photo: String 
     conversationId: ID!
     conversation: Conversation @hasOne(fields: ["conversationId"])
-    recentMessageId: ID
-    recentMessage: Message @hasOne(fields: ["recentMessageId"])
+    messages: [Message] @hasMany(indexName: "byConversation", fields: ["conversationId"])
   }
 
 type Conversation
@@ -37,19 +36,31 @@ type Conversation
     name: String
     initiator: String
     members: [String] 
-    messages: [Message] @hasMany(indexName: "byConversation", fields: ["id"])
     recentMessageId: ID
+    recentMessage: Message @hasOne(fields: ["recentMessageId"])
   }
 
 type Message 
   @model {
-    id: ID!
+    id: ID! @index(name: "byMessageId")
     conversationId: ID! @index(name: "byConversation", sortKeyFields: ["createdAt"])
+    reactions: [MessageReaction] @hasMany(indexName: "messageReactions", fields: ["id"])
     authorId: ID!
     author: User @hasOne(fields: ["authorId"])
     content: String!
     type: String!
-    read: Boolean
+    read: Boolean 
+    createdAt: AWSDateTime!
+    updatedAt: AWSDateTime!
+  }
+
+type MessageReaction
+  @model {
+    id: ID! 
+    messageId: ID! @index(name: "messageReactions", sortKeyFields: ["createdAt"])
+    authorId: ID!
+    author: User @hasOne(fields: ["authorId"])
+    reaction: String
     createdAt: AWSDateTime!
     updatedAt: AWSDateTime!
   }
@@ -111,4 +122,6 @@ type Subscription {
     @aws_subscribe(mutations: ["updateConversation"])
   onMessageCreated(conversationId: ID!): Message
     @aws_subscribe(mutations: ["createMessage"])
+  onMessageReactionCreated(messageId: ID!): MessageReaction
+    @aws_subscribe(mutations: ["createMessageReaction"])
 }
