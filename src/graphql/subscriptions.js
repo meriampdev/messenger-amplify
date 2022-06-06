@@ -22,7 +22,63 @@ export const onUserConversationCreate = /* GraphQL */ `
         recentMessage {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -34,7 +90,63 @@ export const onUserConversationCreate = /* GraphQL */ `
         items {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -67,7 +179,63 @@ export const onUserConversationUpdate = /* GraphQL */ `
         recentMessage {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -79,7 +247,63 @@ export const onUserConversationUpdate = /* GraphQL */ `
         items {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -112,7 +336,63 @@ export const onUserConversationDelete = /* GraphQL */ `
         recentMessage {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -124,7 +404,63 @@ export const onUserConversationDelete = /* GraphQL */ `
         items {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -150,6 +486,35 @@ export const onConversationCreated = /* GraphQL */ `
         id
         conversationId
         reactions {
+          items {
+            id
+            messageId
+            authorId
+            author {
+              id
+              createdAt
+              updatedAt
+              username
+              email
+              displayName
+              photo
+              conversations {
+                items {
+                  id
+                  createdAt
+                  updatedAt
+                  email
+                  displayName
+                  photo
+                  conversationId
+                }
+                nextToken
+              }
+            }
+            reaction
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         authorId
@@ -161,6 +526,50 @@ export const onConversationCreated = /* GraphQL */ `
           email
           displayName
           photo
+          conversations {
+            items {
+              id
+              createdAt
+              updatedAt
+              email
+              displayName
+              photo
+              conversationId
+              conversation {
+                id
+                createdAt
+                updatedAt
+                name
+                initiator
+                members
+                recentMessageId
+                recentMessage {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+              }
+              messages {
+                items {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+            }
+            nextToken
+          }
         }
         content
         type
@@ -185,6 +594,35 @@ export const onConversationUpdated = /* GraphQL */ `
         id
         conversationId
         reactions {
+          items {
+            id
+            messageId
+            authorId
+            author {
+              id
+              createdAt
+              updatedAt
+              username
+              email
+              displayName
+              photo
+              conversations {
+                items {
+                  id
+                  createdAt
+                  updatedAt
+                  email
+                  displayName
+                  photo
+                  conversationId
+                }
+                nextToken
+              }
+            }
+            reaction
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         authorId
@@ -196,6 +634,50 @@ export const onConversationUpdated = /* GraphQL */ `
           email
           displayName
           photo
+          conversations {
+            items {
+              id
+              createdAt
+              updatedAt
+              email
+              displayName
+              photo
+              conversationId
+              conversation {
+                id
+                createdAt
+                updatedAt
+                name
+                initiator
+                members
+                recentMessageId
+                recentMessage {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+              }
+              messages {
+                items {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+            }
+            nextToken
+          }
         }
         content
         type
@@ -216,6 +698,39 @@ export const onMessageCreated = /* GraphQL */ `
           id
           messageId
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           reaction
           createdAt
           updatedAt
@@ -232,6 +747,71 @@ export const onMessageCreated = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -258,6 +838,71 @@ export const onMessageReactionCreated = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -286,6 +931,84 @@ export const onCreateUser = /* GraphQL */ `
           displayName
           photo
           conversationId
+          conversation {
+            id
+            createdAt
+            updatedAt
+            name
+            initiator
+            members
+            recentMessageId
+            recentMessage {
+              id
+              conversationId
+              reactions {
+                items {
+                  id
+                  messageId
+                  authorId
+                  reaction
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              content
+              type
+              read
+              createdAt
+              updatedAt
+            }
+          }
+          messages {
+            items {
+              id
+              conversationId
+              reactions {
+                items {
+                  id
+                  messageId
+                  authorId
+                  reaction
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              content
+              type
+              read
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
         nextToken
       }
@@ -311,6 +1034,84 @@ export const onUpdateUser = /* GraphQL */ `
           displayName
           photo
           conversationId
+          conversation {
+            id
+            createdAt
+            updatedAt
+            name
+            initiator
+            members
+            recentMessageId
+            recentMessage {
+              id
+              conversationId
+              reactions {
+                items {
+                  id
+                  messageId
+                  authorId
+                  reaction
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              content
+              type
+              read
+              createdAt
+              updatedAt
+            }
+          }
+          messages {
+            items {
+              id
+              conversationId
+              reactions {
+                items {
+                  id
+                  messageId
+                  authorId
+                  reaction
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              content
+              type
+              read
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
         nextToken
       }
@@ -336,6 +1137,84 @@ export const onDeleteUser = /* GraphQL */ `
           displayName
           photo
           conversationId
+          conversation {
+            id
+            createdAt
+            updatedAt
+            name
+            initiator
+            members
+            recentMessageId
+            recentMessage {
+              id
+              conversationId
+              reactions {
+                items {
+                  id
+                  messageId
+                  authorId
+                  reaction
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              content
+              type
+              read
+              createdAt
+              updatedAt
+            }
+          }
+          messages {
+            items {
+              id
+              conversationId
+              reactions {
+                items {
+                  id
+                  messageId
+                  authorId
+                  reaction
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              content
+              type
+              read
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
         nextToken
       }
@@ -363,7 +1242,63 @@ export const onCreateUserConversation = /* GraphQL */ `
         recentMessage {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -375,7 +1310,63 @@ export const onCreateUserConversation = /* GraphQL */ `
         items {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -408,7 +1399,63 @@ export const onUpdateUserConversation = /* GraphQL */ `
         recentMessage {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -420,7 +1467,63 @@ export const onUpdateUserConversation = /* GraphQL */ `
         items {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -453,7 +1556,63 @@ export const onDeleteUserConversation = /* GraphQL */ `
         recentMessage {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -465,7 +1624,63 @@ export const onDeleteUserConversation = /* GraphQL */ `
         items {
           id
           conversationId
+          reactions {
+            items {
+              id
+              messageId
+              authorId
+              author {
+                id
+                createdAt
+                updatedAt
+                username
+                email
+                displayName
+                photo
+                conversations {
+                  nextToken
+                }
+              }
+              reaction
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           content
           type
           read
@@ -491,6 +1706,35 @@ export const onCreateConversation = /* GraphQL */ `
         id
         conversationId
         reactions {
+          items {
+            id
+            messageId
+            authorId
+            author {
+              id
+              createdAt
+              updatedAt
+              username
+              email
+              displayName
+              photo
+              conversations {
+                items {
+                  id
+                  createdAt
+                  updatedAt
+                  email
+                  displayName
+                  photo
+                  conversationId
+                }
+                nextToken
+              }
+            }
+            reaction
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         authorId
@@ -502,6 +1746,50 @@ export const onCreateConversation = /* GraphQL */ `
           email
           displayName
           photo
+          conversations {
+            items {
+              id
+              createdAt
+              updatedAt
+              email
+              displayName
+              photo
+              conversationId
+              conversation {
+                id
+                createdAt
+                updatedAt
+                name
+                initiator
+                members
+                recentMessageId
+                recentMessage {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+              }
+              messages {
+                items {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+            }
+            nextToken
+          }
         }
         content
         type
@@ -526,6 +1814,35 @@ export const onUpdateConversation = /* GraphQL */ `
         id
         conversationId
         reactions {
+          items {
+            id
+            messageId
+            authorId
+            author {
+              id
+              createdAt
+              updatedAt
+              username
+              email
+              displayName
+              photo
+              conversations {
+                items {
+                  id
+                  createdAt
+                  updatedAt
+                  email
+                  displayName
+                  photo
+                  conversationId
+                }
+                nextToken
+              }
+            }
+            reaction
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         authorId
@@ -537,6 +1854,50 @@ export const onUpdateConversation = /* GraphQL */ `
           email
           displayName
           photo
+          conversations {
+            items {
+              id
+              createdAt
+              updatedAt
+              email
+              displayName
+              photo
+              conversationId
+              conversation {
+                id
+                createdAt
+                updatedAt
+                name
+                initiator
+                members
+                recentMessageId
+                recentMessage {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+              }
+              messages {
+                items {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+            }
+            nextToken
+          }
         }
         content
         type
@@ -561,6 +1922,35 @@ export const onDeleteConversation = /* GraphQL */ `
         id
         conversationId
         reactions {
+          items {
+            id
+            messageId
+            authorId
+            author {
+              id
+              createdAt
+              updatedAt
+              username
+              email
+              displayName
+              photo
+              conversations {
+                items {
+                  id
+                  createdAt
+                  updatedAt
+                  email
+                  displayName
+                  photo
+                  conversationId
+                }
+                nextToken
+              }
+            }
+            reaction
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         authorId
@@ -572,6 +1962,50 @@ export const onDeleteConversation = /* GraphQL */ `
           email
           displayName
           photo
+          conversations {
+            items {
+              id
+              createdAt
+              updatedAt
+              email
+              displayName
+              photo
+              conversationId
+              conversation {
+                id
+                createdAt
+                updatedAt
+                name
+                initiator
+                members
+                recentMessageId
+                recentMessage {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+              }
+              messages {
+                items {
+                  id
+                  conversationId
+                  authorId
+                  content
+                  type
+                  read
+                  createdAt
+                  updatedAt
+                }
+                nextToken
+              }
+            }
+            nextToken
+          }
         }
         content
         type
@@ -592,6 +2026,39 @@ export const onCreateMessage = /* GraphQL */ `
           id
           messageId
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           reaction
           createdAt
           updatedAt
@@ -608,6 +2075,71 @@ export const onCreateMessage = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -629,6 +2161,39 @@ export const onUpdateMessage = /* GraphQL */ `
           id
           messageId
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           reaction
           createdAt
           updatedAt
@@ -645,6 +2210,71 @@ export const onUpdateMessage = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -666,6 +2296,39 @@ export const onDeleteMessage = /* GraphQL */ `
           id
           messageId
           authorId
+          author {
+            id
+            createdAt
+            updatedAt
+            username
+            email
+            displayName
+            photo
+            conversations {
+              items {
+                id
+                createdAt
+                updatedAt
+                email
+                displayName
+                photo
+                conversationId
+                conversation {
+                  id
+                  createdAt
+                  updatedAt
+                  name
+                  initiator
+                  members
+                  recentMessageId
+                }
+                messages {
+                  nextToken
+                }
+              }
+              nextToken
+            }
+          }
           reaction
           createdAt
           updatedAt
@@ -682,6 +2345,71 @@ export const onDeleteMessage = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -708,6 +2436,71 @@ export const onCreateMessageReaction = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -732,6 +2525,71 @@ export const onUpdateMessageReaction = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
@@ -756,6 +2614,71 @@ export const onDeleteMessageReaction = /* GraphQL */ `
         displayName
         photo
         conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
           nextToken
         }
       }
