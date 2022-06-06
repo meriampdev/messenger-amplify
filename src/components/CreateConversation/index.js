@@ -2,7 +2,6 @@ import React, {useContext, useRef} from 'react';
 import './conversation.css';
 import { Recipient } from "./Recipient"
 import Compose from 'components/Compose';
-import ToolbarButton from 'components/ToolbarButton';
 import { MessengerContext } from "context/messenger"
 import { UserActionsContext } from "context/useractions"
 import { API, graphqlOperation } from 'aws-amplify';
@@ -91,13 +90,7 @@ export default function Conversation(props) {
 
       <div className="message-list-container"></div>
 
-      <Compose 
-        handleSend={handleSend}
-        rightItems={[
-          <ToolbarButton key="image" icon="ion-ios-images" />,
-          <ToolbarButton key="emoji" icon="ion-ios-happy" />
-        ]}
-      />
+      <Compose handleSend={handleSend} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import Message from 'components/Message';
 import moment from 'moment';
 import { API, graphqlOperation } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
-import { createMessage } from "graphql/mutations"
+import { createMessage, updateUserConversation } from "graphql/mutations"
 import { getConversation } from "graphql/queries"
 import { onMessageCreated } from "graphql/subscriptions"
 
@@ -54,7 +54,9 @@ export default function Conversation(props) {
     }
 
     try {
-      API.graphql(graphqlOperation(createMessage, { input: messageData }))
+      let newmessage = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
+      let payload = { id: messenger?.data?.currentConvo?.id, recentMessageId: newmessage?.data?.createMessage?.id }
+      await API.graphql(graphqlOperation(updateUserConversation, { input: payload }))
     } catch(e) {
       console.log('error create message', e)
     }
@@ -135,13 +137,7 @@ export default function Conversation(props) {
 
         <div className="message-list-container">{renderMessages()}</div>
 
-        <Compose 
-          handleSend={handleSend}
-          rightItems={[
-            <ToolbarButton key="image" icon="ion-ios-images" />,
-            <ToolbarButton key="emoji" icon="ion-ios-happy" />
-          ]}
-        />
+        <Compose handleSend={handleSend} />
       </div>
     );
 }

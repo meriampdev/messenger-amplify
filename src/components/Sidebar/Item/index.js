@@ -32,7 +32,6 @@ export default function ConversationItem(props) {
       onClick={props?.onClick}
       className={`conversation-list-item ${props.active ? 'active': ''}`}
     >
-      {/* <img className="conversation-photo" src={photo ?? "https://picsum.photos/200/300?random=1"} alt="conversation" /> */}
       <Avatar 
         name={displayName}
         className="conversation-photo"
@@ -40,7 +39,11 @@ export default function ConversationItem(props) {
       />
       <div className="conversation-info">
         <h1 className="conversation-title">{ displayName }</h1>
-        <p className="conversation-snippet">{ text }</p>
+        <Box 
+          as="p"
+          className="conversation-snippet" 
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
       </div>
       {showOptions && 
         <Box

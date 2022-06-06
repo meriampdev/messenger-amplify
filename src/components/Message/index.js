@@ -35,9 +35,13 @@ export default function Message(props) {
           }
           {(!isMine && (startsSequence)) && <Text fontSize="xs" opacity={0.7}>{data?.author?.username}</Text>}
           <div className="bubble-container">
-            <div className="bubble" title={friendlyTimestamp}>
-              { data.content }
-            </div>
+            <Box 
+              className="bubble" 
+              title={friendlyTimestamp} 
+              dangerouslySetInnerHTML={{
+                __html: data?.content
+              }}
+            />
           </div>
         </Box>
       </HStack>

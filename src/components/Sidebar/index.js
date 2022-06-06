@@ -10,6 +10,7 @@ import { MessengerContext } from "context/messenger"
 import { 
   onUserConversationCreate,
   onUserConversationDelete,
+  onUserConversationUpdate
 } from "graphql/subscriptions"
 
 export default function Sidebar(props) {
@@ -50,6 +51,22 @@ export default function Sidebar(props) {
       }
     })
 
+    let subUpdate = API.graphql({
+      query: onUserConversationUpdate,
+      variables: { email: userEmail }
+    })
+    .subscribe({
+      next: roomData => {
+        let convo = roomData?.value?.data?.onUserConversationUpdate
+        console.log('onUserConversationUpdate', convo)
+        setConversations(prev => {
+          return prev.map(item => {
+            return item.id === convo?.id ? convo : item
+          })
+        })
+      }
+    })
+
     let subDelete = API.graphql({
       query: onUserConversationDelete,
       variables: { email: userEmail }
@@ -63,6 +80,7 @@ export default function Sidebar(props) {
     return () => {
       subscription.unsubscribe();
       subDelete.unsubscribe();
+      subUpdate.unsubscribe();
     }
   }, [userEmail]);
 

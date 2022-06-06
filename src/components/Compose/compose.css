@@ -33,6 +33,14 @@
   width: 100%;
 }
 
+.editable-div:empty::before {
+  content: attr(placeholder);
+  color: lightgray;
+  display: block;
+  position:absolute;    
+  z-index: 0;
+}
+
 .compose-input::placeholder {
   opacity: 0.3;
 }
