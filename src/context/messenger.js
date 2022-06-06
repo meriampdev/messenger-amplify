@@ -21,7 +21,6 @@ export const MessengerProvider = ({ user, children }) => {
   const checkIfUserExists = async (username, email) => {
     try {
       const _user = await API.graphql(graphqlOperation(GetUser, { email }))
-      console.log('_user', _user)
       const { userByEmail } = _user?.data
       if (!userByEmail || userByEmail?.items?.length <= 0) {
         console.log('will create')

@@ -1,24 +1,17 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import './message.css';
 import { 
   Avatar, 
   Box, 
-  Flex,
   Text, 
   HStack, 
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
-  PopoverArrow,
 } from "@chakra-ui/react"
-import Picker from 'emoji-picker-react';
 import moment from 'moment';
 import { MessengerContext } from "context/messenger"
 import { API, graphqlOperation } from 'aws-amplify';
 import { createMessageReaction } from 'graphql/mutations';
-import { onMessageReactionCreated } from "graphql/subscriptions"
-
+import { EmojiPicker } from "./EmojiPicker"
+import { Reactions } from "./Reactions"
 
 export default function Message(props) {
   const {
@@ -29,33 +22,14 @@ export default function Message(props) {
     showTimestamp
   } = props;
   const messenger = useContext(MessengerContext)
-  const [reactions, setReactions] = useState(data?.reactions?.items)
 
-  useEffect(() => {
-    let subscription = API.graphql({
-      query: onMessageReactionCreated,
-      variables: {
-        messageId: data?.id
-      }
-    })
-    .subscribe({
-      next: messageData => {
-        setReactions(prev => ([ ...prev, messageData?.value?.data?.onMessageReactionCreated ]))
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  console.log('reactions', reactions)
   const onEmojiClick = async (event, emojiObject) => {
     let reactionData = {
       messageId: data?.id,
       authorId: messenger?.data?.user?.me?.id,
       reaction: emojiObject.emoji
     }
-    let reaction = await API.graphql(graphqlOperation(createMessageReaction, { input: reactionData }))
-    console.log('reaction', reaction)
+    await API.graphql(graphqlOperation(createMessageReaction, { input: reactionData }))
   };
 
   const friendlyTimestamp = moment(data.createdAt).format('LLLL');
@@ -94,36 +68,12 @@ export default function Message(props) {
                 __html: data?.content
               }}
             />
-            {reactions?.length > 0 &&
-              <Box
-                pos="absolute" 
-                bottom={-2}
-                right={0}
-                fontSize={18}
-              >
-                <Flex>
-                  {reactions?.map((reaction) => reaction?.reaction)}
-                </Flex>
-              </Box>
-            }
+            <Reactions messageId={data?.id} initial={data?.reactions?.items} />
           </Box>
           
           {!isMine && 
             <Box className="reaction-button" alignSelf="center" ml={3}>
-              <Popover placement="auto" autoFocus={false}>
-                <PopoverTrigger>
-                  <i className={`reaction ion-ios-happy`}  />
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverBody>
-                    <Picker 
-                      onEmojiClick={onEmojiClick} 
-                      disableSkinTonePicker={true}
-                    />
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
+              <EmojiPicker onEmojiClick={onEmojiClick}  />
             </Box>
           }
         </Box>

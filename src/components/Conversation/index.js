@@ -39,7 +39,6 @@ export default function Conversation(props) {
 
   const getMessages = async () => {
     let res = await  API.graphql(graphqlOperation(getUserConversation, { id: messenger?.data?.currentConvo?.id }))
-    console.log('res', res)
     let items = res?.data?.getUserConversation?.messages?.items ?? []
     if(items?.length > 0) {
       setMessages(items)
