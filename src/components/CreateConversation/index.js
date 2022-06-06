@@ -40,15 +40,11 @@ export default function Conversation(props) {
         initiator: userEmail
       }
 
-      let filters = null 
-      if(members.length === 2) {
-        filters = { filter: { 
-          and: [
-            { members: { contains: recipients[0] } }, 
-            { members: { contains: userEmail } }
-          ] 
-        }}
-      }
+      let conditions = members.map((member) => {
+        return { members: { contains: member } }
+      }) 
+      let filters = { filter: { and: conditions } }
+      
       const check = await API.graphql(graphqlOperation(listConversations, filters))
       let conversation
       if(check?.data?.listConversations?.items?.length <= 0) {
@@ -70,13 +66,13 @@ export default function Conversation(props) {
       const message = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
 
       const linkToUsers = members.map((member) => {
-        let other = members.filter((f) => f !== member)
-        let nameString = other.join()
-        let displayName = nameString?.split("@")
+        let others = members.filter((f) => f !== member)
+        let nameArr = others?.map((other) => other?.split("@")[0])
+        let displayName = nameArr.join()
         let input = {
           conversationId: conversationId,
           email: member,
-          displayName: displayName[0],
+          displayName: displayName,
           recentMessageId: message?.data?.createMessage?.id
         }
         return API.graphql(graphqlOperation(createUserConversation, { input: input }))

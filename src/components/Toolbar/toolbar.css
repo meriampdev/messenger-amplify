@@ -8,6 +8,7 @@
 
   position: sticky;
   top: 0px;
+  z-index: 100;
 }
 .toolbar.with-shadow {
   box-shadow: 0 0 4px rgba(0,0,0,0.2);
