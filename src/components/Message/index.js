@@ -72,7 +72,7 @@ export default function Message(props) {
           </Box>
           
           {!isMine && 
-            <Box className="reaction-button" alignSelf="center" ml={3}>
+            <Box className="reaction-button" alignSelf="flex-end" ml={3}>
               <EmojiPicker onEmojiClick={onEmojiClick}  />
             </Box>
           }

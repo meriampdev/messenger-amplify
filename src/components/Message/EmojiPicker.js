@@ -4,14 +4,20 @@ import {
   PopoverContent,
   PopoverBody,
   PopoverArrow,
+  useDisclosure
 } from "@chakra-ui/react"
 import Picker from 'emoji-picker-react';
 
 export const EmojiPicker = ({ onEmojiClick }) => {
+  const { onOpen, onClose, isOpen } = useDisclosure()
+
   return (
     <Popover 
       placement="auto" 
       autoFocus={false}
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
     >
       <PopoverTrigger>
         <i className={`reaction ion-ios-happy`}  />
@@ -20,7 +26,10 @@ export const EmojiPicker = ({ onEmojiClick }) => {
         <PopoverArrow />
         <PopoverBody p={1}>
           <Picker 
-            onEmojiClick={onEmojiClick} 
+            onEmojiClick={(e, value) => {
+              onClose()
+              onEmojiClick(e, value)
+            }} 
             disableSkinTonePicker={true}
             pickerStyle={{
               boxShadow: 'none',

@@ -60,29 +60,6 @@ export const Reactions = ({initial, messageId}) => {
         </Flex>
       </Tooltip>
     )
-
-    // return Object.keys(group).map((emoji, i) => {
-    //   return (
-    //     <Tooltip 
-    //       hasArrow
-    //       placement="top"
-    //       label={group[emoji]?.map((author) => <div key={author}>{author}</div>) }
-    //       key={`reaction-${i}`}
-    //       borderRadius="md"
-    //     >
-    //       <Box 
-    //         cursor="pointer"
-    //         bg="#FFF"
-    //         borderRadius="full"
-    //         px={1}
-    //         boxShadow="0 2px 4px rgba(0,0,0,0.1)"
-    //         fontSize={14}
-    //       >
-    //         {emoji}
-    //       </Box>
-    //     </Tooltip>
-    //   )
-    // })
   }
 
   return (
@@ -93,7 +70,6 @@ export const Reactions = ({initial, messageId}) => {
       fontSize={18}
     >
       <Flex>
-        {/* {groupEmoji()} */}
         <Box 
           cursor="pointer"
           bg="#FFF"
