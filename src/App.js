@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Auth, Hub } from 'aws-amplify';
 import Messenger from "components/Messenger"
+import { MessengerContext } from "context/messenger"
 
 function App() {
+  const messenger = useContext(MessengerContext)
   const [user, updateUser] = React.useState(null);
-  React.useEffect(() => {
+
+  useEffect(() => {
+    handleActiveTab()
     Auth.currentAuthenticatedUser()
       .then(user => updateUser(user))
       .catch((e) => {
@@ -20,7 +24,23 @@ function App() {
         default: break;
       }
     });
+
+    return () => {
+      document.removeEventListener('visibilitychange')
+    }
   }, []);
+
+  const handleActiveTab = () => {
+    document.addEventListener('visibilitychange', function (event) {
+      if (document.hidden) {
+          console.log('not visible');
+          messenger.setAppState({ activeTab: false })
+      } else {
+          console.log('is visible');
+          messenger.setAppState({ activeTab: true })
+      }
+    });
+  }
 
   if (user) {
     return <Messenger />

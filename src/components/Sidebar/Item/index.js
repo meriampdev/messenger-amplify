@@ -21,6 +21,7 @@ export default function ConversationItem(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [recent, setRecent] = useState(conversation?.recentMessage?.content)
 
+
   useEffect(() => {
     let subscription = API.graphql({
       query: onUpdateConversation,
@@ -33,7 +34,8 @@ export default function ConversationItem(props) {
         const { id, recentMessage } = messageData?.value?.data?.onUpdateConversation
         if(conversation?.id === id) {
           messenger.setCurrentConvo(messageData?.value?.data?.onUpdateConversation)
-          if (Notification.permission === "granted") {
+          console.log('tab', messenger?.data?.appState?.activeTab)
+          if (!messenger?.data?.appState?.activeTab && Notification.permission === "granted") {
             if(me?.id !== recentMessage?.author?.id) {
               const title = `New Message from ${recentMessage?.author?.username}`
               const body = recentMessage?.content
@@ -47,8 +49,8 @@ export default function ConversationItem(props) {
     })
 
     return () => subscription && subscription.unsubscribe();
-  // eslint-disable-next-line
-  }, [conversation])
+
+  }, [conversation, messenger])
 
   const handleDelete = async (e) => {
     e?.stopPropagation()

@@ -8,6 +8,7 @@ export const MessengerContext = createContext(null);
 export const MessengerProvider = ({ user, children }) => {
   const [currentConvo, setConvoId] = useState("");
   const [userData, setUserData] = useState(user)
+  const [appState, setAppState] = useState({})
 
   useEffect(() => {
     if(user?.username) {
@@ -53,7 +54,7 @@ export const MessengerProvider = ({ user, children }) => {
 
   return (
     <>
-      <MessengerContext.Provider value={{ data: { currentConvo, user: userData }, setCurrentConvo }}>
+      <MessengerContext.Provider value={{ data: { currentConvo, user: userData, appState }, setAppState, setCurrentConvo }}>
         {children}
       </MessengerContext.Provider>
     </>
