@@ -11,6 +11,8 @@ export default function Landing() {
   const [user, updateUser] = React.useState(null);
 
   React.useEffect(() => {
+    Notification.requestPermission()
+
     if(!!Auth?.userPool) {
       Auth.currentAuthenticatedUser()
         .then(user => updateUser(user))

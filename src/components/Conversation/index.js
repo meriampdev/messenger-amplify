@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import './conversation.css';
+import { Box, VStack } from "@chakra-ui/react"
 import Compose from 'components/Compose';
 import Toolbar from 'components/Toolbar';
 import ToolbarButton from 'components/ToolbarButton';
@@ -8,7 +9,7 @@ import moment from 'moment';
 import { API, graphqlOperation } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
 import { createMessage, updateConversation } from "graphql/mutations"
-import { getUserConversation } from "graphql/queries"
+import { listUserConversations } from "graphql/queries"
 import { onMessageCreated } from "graphql/subscriptions"
 
 export default function Conversation(props) {
@@ -17,17 +18,23 @@ export default function Conversation(props) {
 
   useEffect(() => {
     let subscription
-    if(messenger?.data?.currentConvo?.conversationId) {
+    if(messenger?.data?.currentConvo?.id) {
+
+      if(messenger?.data?.currentConvo?.messages?.items?.length > 0) {
+        setMessages(messenger?.data?.currentConvo?.messages?.items)
+      }
+      
       getMessages()
       subscription = API.graphql({
         query: onMessageCreated,
         variables: {
-          conversationId: messenger?.data?.currentConvo?.conversationId 
+          conversationId: messenger?.data?.currentConvo?.id 
         }
       })
       .subscribe({
         next: messageData => {
-          setMessages(prev => [ ...prev, messageData?.value?.data?.onMessageCreated ])
+          let data = messageData?.value?.data?.onMessageCreated
+          setMessages(prev => [ ...prev, data ])
         }
       })
     }
@@ -35,19 +42,26 @@ export default function Conversation(props) {
     return () => subscription && subscription.unsubscribe();
 
   // eslint-disable-next-line
-  }, [messenger?.data?.currentConvo?.conversationId]);
+  }, [messenger?.data?.currentConvo?.id]);
 
   const getMessages = async () => {
-    let res = await  API.graphql(graphqlOperation(getUserConversation, { id: messenger?.data?.currentConvo?.id }))
-    let items = res?.data?.getUserConversation?.messages?.items ?? []
+    let filter = {
+      and: [
+        {conversationId: { eq: messenger?.data?.currentConvo?.id }},
+        {email: { eq: messenger?.data?.user?.me?.email } }
+      ]
+    }
+    let res = await  API.graphql(graphqlOperation(listUserConversations, { filter: filter }))
+    let items = res?.data?.listUserConversations?.items ?? []
     if(items?.length > 0) {
-      setMessages(items)
+      let mlist = items[0].messages?.items
+      setMessages(mlist)
     }
   }
 
   const handleSend = async (content) => {
     const messageData = {
-      conversationId: messenger?.data?.currentConvo?.conversationId,
+      conversationId: messenger?.data?.currentConvo?.id,
       content: content,
       type: "text",
       authorId: messenger?.data?.user?.me?.id
@@ -56,7 +70,7 @@ export default function Conversation(props) {
     try {
       let newmessage = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
       let payload = { 
-        id: messenger?.data?.currentConvo?.conversationId, 
+        id: messenger?.data?.currentConvo?.id, 
         recentMessageId: newmessage?.data?.createMessage?.id 
       }
       await API.graphql(graphqlOperation(updateConversation, { input: payload }))
@@ -124,23 +138,29 @@ export default function Conversation(props) {
     }
 
     setTimeout(() => {
-      var objDiv = document.getElementById("content");
+      var objDiv = document.getElementById("messages");
       objDiv.scrollTo(0, objDiv.scrollHeight)
     }, 100)
     return tempMessages;
   }
 
     return(
-      <div id="message-list" className="message-list">
-        <Toolbar
-          className="with-shadow"
-          title=""
-          rightItems={[<ToolbarButton key="info" icon="ion-ios-information-circle-outline" />]}
-        />
-
-        <div className="message-list-container">{renderMessages()}</div>
-
-        <Compose handleSend={handleSend} />
-      </div>
+      <VStack id="message-list" height="100%" spacing={0}>
+        <Box w="100%">
+          <Toolbar
+            className="with-shadow"
+            title=""
+            rightItems={[<ToolbarButton key="info" icon="ion-ios-information-circle-outline" />]}
+          />
+        </Box>
+        <Box id="messages" flex={1} maxH="100%" w="100%" overflow="scroll" bg="#FFF" px={2}>
+          <Box>
+            {renderMessages()}
+          </Box>
+        </Box>  
+        <Box w="100%">
+          <Compose handleSend={handleSend} />
+        </Box>
+      </VStack>
     );
 }

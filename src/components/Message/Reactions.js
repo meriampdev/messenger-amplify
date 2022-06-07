@@ -9,6 +9,10 @@ export const Reactions = ({initial, messageId}) => {
   const [reactions, setReactions] = useState(initial)
 
   useEffect(() => {
+    setReactions(initial)
+  }, [initial])
+
+  useEffect(() => {
     let subscription = API.graphql({
       query: onMessageReactionCreated,
       variables: {
@@ -104,6 +108,7 @@ export const Reactions = ({initial, messageId}) => {
       bottom={-4}
       right={0}
       fontSize={18}
+      zIndex={1}
     >
       <Flex>
         <Box 

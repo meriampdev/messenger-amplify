@@ -57,6 +57,7 @@ export default function Message(props) {
         <Box 
           className="bubble-container"
           pos="relative"
+          mb={data?.reactions?.items?.length > 0 ? 5 : ""}
         >
           <Box
             className="bubble"
@@ -68,7 +69,7 @@ export default function Message(props) {
                 __html: data?.content
               }}
             />
-            <Reactions messageId={data?.id} initial={data?.reactions?.items} />
+            <Reactions messageId={data?.id} initial={data?.reactions?.items || []} />
           </Box>
           
           {!isMine && 

@@ -39,6 +39,7 @@ type Conversation
     members: [String] 
     recentMessageId: ID
     recentMessage: Message @hasOne(fields: ["recentMessageId"])
+    userConversation: UserConversation @belongsTo
   }
 
 type Message 

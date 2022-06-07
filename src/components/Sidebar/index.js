@@ -15,7 +15,6 @@ import {
 export default function Sidebar(props) {
   const messenger = useContext(MessengerContext)
   const [conversations, setConversations] = useState([]);
-  const [active, setActive] = useState(0)
   const userEmail = messenger?.data?.user?.attributes?.email
   const myId = messenger?.data?.user?.me?.id
 
@@ -34,7 +33,7 @@ export default function Sidebar(props) {
 
   useEffect(() => {
     if(conversations?.length > 0) {
-      messenger?.setCurrentConvo(conversations[0])
+      messenger?.setCurrentConvo(conversations[0].conversation)
     }
   // eslint-disable-next-line
   }, [conversations])
@@ -86,14 +85,16 @@ export default function Sidebar(props) {
           let text = `${recent?.authorId === myId ? 'You: ' : ''} ${recent?.content}`
           return (
             <ConversationItem
-              key={conversation.id}
+              key={conversation?.id}
               me={userEmail}
-              active={i === active}
+              active={conversation?.conversationId === messenger?.data?.currentConvo?.id}
               data={{ ...conversation, text}}
               showOptions={true}
               onClick={() => {
-                setActive(i)
-                messenger?.setCurrentConvo(conversation)
+                messenger?.setCurrentConvo({ 
+                  ...conversation?.conversation, 
+                  messages: conversation?.messages
+                })
               }}
             />
           )

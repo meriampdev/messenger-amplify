@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './item.css';
 import {
   Box, 
@@ -8,12 +8,15 @@ import {
 } from '@chakra-ui/react'
 import { SmallCloseIcon } from "@chakra-ui/icons"
 import { Alert } from "components/Alert"
+import { MessengerContext } from "context/messenger"
 import { API, graphqlOperation } from 'aws-amplify';
 import { deleteUserConversation } from "graphql/mutations"
 import { onUpdateConversation } from "graphql/subscriptions"
 
 export default function ConversationItem(props) {
   const { showOptions } = props
+  const messenger = useContext(MessengerContext)
+  const me = messenger?.data?.user?.me
   const { displayName, id, conversation } = props.data;
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [recent, setRecent] = useState(conversation?.recentMessage?.content)
@@ -29,12 +32,22 @@ export default function ConversationItem(props) {
       next: messageData => {
         const { id, recentMessage } = messageData?.value?.data?.onUpdateConversation
         if(conversation?.id === id) {
+          messenger.setCurrentConvo(messageData?.value?.data?.onUpdateConversation)
+          if (Notification.permission === "granted") {
+            if(me?.id !== recentMessage?.author?.id) {
+              const title = `New Message from ${recentMessage?.author?.username}`
+              const body = recentMessage?.content
+              new Notification(title, { body });
+            }
+          }
+      
           setRecent(recentMessage?.content)
         } 
       }
     })
 
     return () => subscription && subscription.unsubscribe();
+  // eslint-disable-next-line
   }, [conversation])
 
   const handleDelete = async (e) => {

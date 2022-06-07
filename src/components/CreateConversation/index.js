@@ -12,6 +12,7 @@ import {
   createMessage,
   createUserConversation
 } from 'graphql/mutations';
+import { arrayIsSame } from "utils/arrayHelpers"
 
 export default function Conversation(props) {
   const messenger = useContext(MessengerContext)
@@ -43,18 +44,25 @@ export default function Conversation(props) {
         return { members: { contains: member } }
       }) 
       let filters = { filter: { and: conditions } }
-      console.log('filters', filters)
 
       const check = await API.graphql(graphqlOperation(listConversations, filters))
       let conversationId
       let isExisting = false
-      console.log('check', check)
-      if(check?.data?.listConversations?.items?.length <= 0) {
+      const { items: foundItems } = check?.data?.listConversations
+      let foundSame = false 
+      let existing = null
+      foundItems?.forEach((item) => {
+        if(arrayIsSame(item?.members, members)) {
+          foundSame = true
+          existing = item
+        }
+      })
+
+      if(!foundSame || foundItems?.length <= 0) {
         let conversation = await API.graphql(graphqlOperation(createConversation, { input: convo }))
         conversationId = conversation?.data?.createConversation?.id
       } else {
         isExisting = true
-        let existing = check?.data?.listConversations?.items[0]
         conversationId = existing?.id
       }
 

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Box } from "@chakra-ui/react"
 import Sidebar from 'components/Sidebar';
 import Conversation from 'components/Conversation';
 import CreateConversation from 'components/CreateConversation'
@@ -14,14 +15,13 @@ export default function Messenger() {
         <Sidebar />
       </div>
 
-      <div id="content" className="scrollable content">
+      <Box id="content" height="100vh" overflow="hidden">
         {
           userAction?.state?.createNewConvo ? 
             <CreateConversation />
           : <Conversation />
         }
-        
-      </div>
+      </Box>
     </div>
   );
 }

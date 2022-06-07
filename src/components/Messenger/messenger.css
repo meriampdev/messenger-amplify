@@ -5,7 +5,6 @@
   background: #eeeef1;
 
   grid-template-columns: 350px auto;
-  grid-template-rows: 60px auto 60px;
   grid-column-gap: 1px;
   grid-row-gap: 1px;
 }
@@ -34,8 +33,6 @@
 
 .content {
   background: white;
-  grid-row-start: 1;
-  grid-row-end: span 3;
 }
 
 .footer {
