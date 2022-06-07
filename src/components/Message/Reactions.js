@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
-import { Box, Flex, Tooltip, Text } from "@chakra-ui/react"
+import { Box, Flex, Tooltip, Text, useDisclosure } from "@chakra-ui/react"
 import { API } from 'aws-amplify';
-import { onMessageReactionCreated } from "graphql/subscriptions"
+import { onMessageReactionCreated, onMessageReactionRemoved } from "graphql/subscriptions"
+import { AllReaction } from "./AllReaction"
 
 export const Reactions = ({initial, messageId}) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const [reactions, setReactions] = useState(initial)
 
   useEffect(() => {
@@ -19,14 +21,31 @@ export const Reactions = ({initial, messageId}) => {
       }
     })
 
-    return () => subscription.unsubscribe()
+    let subOnRemove = API.graphql({
+      query: onMessageReactionRemoved,
+      variables: {
+        messageId: messageId
+      }
+    })
+    .subscribe({
+      next: messageData => {
+        let {id} = messageData?.value?.data?.onMessageReactionRemoved
+        setReactions(prev => (prev.filter((f) => f?.id !== id)))
+      }
+    })
+
+    return () => {
+      subscription.unsubscribe()
+      subOnRemove.unsubscribe()
+    }
   }, [messageId])
 
-  const groupEmoji = () => {
+  const groupByReaction = () => {
     const group = {}
     reactions?.forEach((reaction) => {
       let author = reaction?.author?.username
-      let obj = group[reaction?.reaction]?.length > 0 ? [...group[reaction?.reaction], author] : [author]
+      let id = reaction?.id
+      let obj = group[reaction?.reaction]?.length > 0 ? [...group[reaction?.reaction], { author, id }] : [{ author, id }]
       group[reaction?.reaction] = [...new Set(obj)] 
     })
 
@@ -34,20 +53,28 @@ export const Reactions = ({initial, messageId}) => {
       return { emoji: emoji, authors: group[emoji] }
     })
 
+    return groupsArray
+  }
+
+  const groupEmoji = () => {
+    let names = reactions?.map((item) => item?.author?.username)
+    let authors = [...new Set(names)] 
+    let groupsArray = groupByReaction()
+
     return (
       <Tooltip 
         hasArrow
         placement="top"
-        label={groupsArray?.map((reaction, i) => {
+        label={authors?.map((author) => {
           return (
-            <div key={`e${i}`}>
-              {reaction?.authors?.map((author) => <div key={reaction?.emoji+author}>{author} {reaction?.emoji}</div>)}
+            <div key={author}>
+              {author}
             </div>
           )
         }) }
         borderRadius="md"
       >
-        <Flex fontSize={13} alignItems="center">
+        <Flex fontSize={16} alignItems="center">
         {
           groupsArray?.length > 3 ?
             <>
@@ -55,8 +82,15 @@ export const Reactions = ({initial, messageId}) => {
             <Text>{groupsArray[1].emoji}</Text>
             <Text color="#000" fontSize={10}>+{reactions?.length - 2}</Text>
             </>
-          : groupsArray?.map((reaction) => <Text key={reaction?.emoji}>{reaction?.emoji}</Text>)
+          : groupsArray?.map((reaction) => {
+            return (
+              <Text key={reaction?.emoji}>
+                {reaction?.emoji} 
+              </Text>
+            )
+          })
         }
+        { reactions?.length > 1 && <Text fontSize={12} ml={1}>{reactions.length}</Text> }
         </Flex>
       </Tooltip>
     )
@@ -71,6 +105,7 @@ export const Reactions = ({initial, messageId}) => {
     >
       <Flex>
         <Box 
+          onClick={onOpen}
           cursor="pointer"
           bg="#FFF"
           borderRadius="full"
@@ -80,6 +115,13 @@ export const Reactions = ({initial, messageId}) => {
         >
           {groupEmoji()}
         </Box>
+        <AllReaction 
+          isOpen={isOpen}
+          onOpen={onOpen}
+          onClose={onClose}
+          all={reactions}
+          grouped={groupByReaction()}
+        />
       </Flex>
     </Box>
   )

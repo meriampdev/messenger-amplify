@@ -12,6 +12,7 @@ type User
     email: String @index(name: "byEmail", queryField: "userByEmail")
     displayName: String 
     photo: String
+    authpool: String
     conversations: [UserConversation] @hasMany(indexName: "convoByEmail", fields: ["email"])
   }
 
@@ -124,4 +125,6 @@ type Subscription {
     @aws_subscribe(mutations: ["createMessage"])
   onMessageReactionCreated(messageId: ID!): MessageReaction
     @aws_subscribe(mutations: ["createMessageReaction"])
+  onMessageReactionRemoved(messageId: ID!): MessageReaction
+    @aws_subscribe(mutations: ["deleteMessageReaction"])
 }

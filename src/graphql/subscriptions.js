@@ -35,6 +35,7 @@ export const onUserConversationCreate = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -54,6 +55,7 @@ export const onUserConversationCreate = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -103,6 +105,7 @@ export const onUserConversationCreate = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -122,6 +125,7 @@ export const onUserConversationCreate = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -192,6 +196,7 @@ export const onUserConversationUpdate = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -211,6 +216,7 @@ export const onUserConversationUpdate = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -260,6 +266,7 @@ export const onUserConversationUpdate = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -279,6 +286,7 @@ export const onUserConversationUpdate = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -349,6 +357,7 @@ export const onUserConversationDelete = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -368,6 +377,7 @@ export const onUserConversationDelete = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -417,6 +427,7 @@ export const onUserConversationDelete = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -436,6 +447,7 @@ export const onUserConversationDelete = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -498,6 +510,7 @@ export const onConversationCreated = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -526,6 +539,7 @@ export const onConversationCreated = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -606,6 +620,7 @@ export const onConversationUpdated = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -634,6 +649,7 @@ export const onConversationUpdated = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -706,6 +722,7 @@ export const onMessageCreated = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -746,6 +763,7 @@ export const onMessageCreated = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -778,6 +796,7 @@ export const onMessageCreated = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -802,6 +821,7 @@ export const onMessageCreated = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -837,6 +857,7 @@ export const onMessageReactionCreated = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -869,6 +890,7 @@ export const onMessageReactionCreated = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -893,6 +915,99 @@ export const onMessageReactionCreated = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }
+      reaction
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onMessageReactionRemoved = /* GraphQL */ `
+  subscription OnMessageReactionRemoved($messageId: ID!) {
+    onMessageReactionRemoved(messageId: $messageId) {
+      id
+      messageId
+      authorId
+      author {
+        id
+        createdAt
+        updatedAt
+        username
+        email
+        displayName
+        photo
+        authpool
+        conversations {
+          items {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+            conversation {
+              id
+              createdAt
+              updatedAt
+              name
+              initiator
+              members
+              recentMessageId
+              recentMessage {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                  authpool
+                }
+                content
+                type
+                read
+                createdAt
+                updatedAt
+              }
+            }
+            messages {
+              items {
+                id
+                conversationId
+                reactions {
+                  nextToken
+                }
+                authorId
+                author {
+                  id
+                  createdAt
+                  updatedAt
+                  username
+                  email
+                  displayName
+                  photo
+                  authpool
                 }
                 content
                 type
@@ -922,6 +1037,7 @@ export const onCreateUser = /* GraphQL */ `
       email
       displayName
       photo
+      authpool
       conversations {
         items {
           id
@@ -962,6 +1078,7 @@ export const onCreateUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -997,6 +1114,7 @@ export const onCreateUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1025,6 +1143,7 @@ export const onUpdateUser = /* GraphQL */ `
       email
       displayName
       photo
+      authpool
       conversations {
         items {
           id
@@ -1065,6 +1184,7 @@ export const onUpdateUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1100,6 +1220,7 @@ export const onUpdateUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1128,6 +1249,7 @@ export const onDeleteUser = /* GraphQL */ `
       email
       displayName
       photo
+      authpool
       conversations {
         items {
           id
@@ -1168,6 +1290,7 @@ export const onDeleteUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1203,6 +1326,7 @@ export const onDeleteUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1255,6 +1379,7 @@ export const onCreateUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1274,6 +1399,7 @@ export const onCreateUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -1323,6 +1449,7 @@ export const onCreateUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1342,6 +1469,7 @@ export const onCreateUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -1412,6 +1540,7 @@ export const onUpdateUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1431,6 +1560,7 @@ export const onUpdateUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -1480,6 +1610,7 @@ export const onUpdateUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1499,6 +1630,7 @@ export const onUpdateUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -1569,6 +1701,7 @@ export const onDeleteUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1588,6 +1721,7 @@ export const onDeleteUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -1637,6 +1771,7 @@ export const onDeleteUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -1656,6 +1791,7 @@ export const onDeleteUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -1718,6 +1854,7 @@ export const onCreateConversation = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -1746,6 +1883,7 @@ export const onCreateConversation = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -1826,6 +1964,7 @@ export const onUpdateConversation = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -1854,6 +1993,7 @@ export const onUpdateConversation = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -1934,6 +2074,7 @@ export const onDeleteConversation = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -1962,6 +2103,7 @@ export const onDeleteConversation = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -2034,6 +2176,7 @@ export const onCreateMessage = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -2074,6 +2217,7 @@ export const onCreateMessage = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -2106,6 +2250,7 @@ export const onCreateMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2130,6 +2275,7 @@ export const onCreateMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2169,6 +2315,7 @@ export const onUpdateMessage = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -2209,6 +2356,7 @@ export const onUpdateMessage = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -2241,6 +2389,7 @@ export const onUpdateMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2265,6 +2414,7 @@ export const onUpdateMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2304,6 +2454,7 @@ export const onDeleteMessage = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -2344,6 +2495,7 @@ export const onDeleteMessage = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -2376,6 +2528,7 @@ export const onDeleteMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2400,6 +2553,7 @@ export const onDeleteMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2435,6 +2589,7 @@ export const onCreateMessageReaction = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -2467,6 +2622,7 @@ export const onCreateMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2491,6 +2647,7 @@ export const onCreateMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2524,6 +2681,7 @@ export const onUpdateMessageReaction = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -2556,6 +2714,7 @@ export const onUpdateMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2580,6 +2739,7 @@ export const onUpdateMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2613,6 +2773,7 @@ export const onDeleteMessageReaction = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -2645,6 +2806,7 @@ export const onDeleteMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -2669,6 +2831,7 @@ export const onDeleteMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type

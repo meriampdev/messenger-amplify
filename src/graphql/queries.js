@@ -11,6 +11,7 @@ export const getUser = /* GraphQL */ `
       email
       displayName
       photo
+      authpool
       conversations {
         items {
           id
@@ -51,6 +52,7 @@ export const getUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -86,6 +88,7 @@ export const getUser = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -119,6 +122,7 @@ export const listUsers = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -151,6 +155,7 @@ export const listUsers = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -175,6 +180,7 @@ export const listUsers = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -226,6 +232,7 @@ export const getUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -245,6 +252,7 @@ export const getUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -294,6 +302,7 @@ export const getUserConversation = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -313,6 +322,7 @@ export const getUserConversation = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -392,6 +402,7 @@ export const listUserConversations = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 reaction
                 createdAt
@@ -408,6 +419,7 @@ export const listUserConversations = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -445,6 +457,7 @@ export const listUserConversations = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 reaction
                 createdAt
@@ -461,6 +474,7 @@ export const listUserConversations = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -513,6 +527,7 @@ export const getConversation = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -541,6 +556,7 @@ export const getConversation = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -626,6 +642,7 @@ export const listConversations = /* GraphQL */ `
                 email
                 displayName
                 photo
+                authpool
                 conversations {
                   nextToken
                 }
@@ -645,6 +662,7 @@ export const listConversations = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -699,6 +717,7 @@ export const getMessage = /* GraphQL */ `
             email
             displayName
             photo
+            authpool
             conversations {
               items {
                 id
@@ -739,6 +758,7 @@ export const getMessage = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -771,6 +791,7 @@ export const getMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -795,6 +816,7 @@ export const getMessage = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -839,6 +861,7 @@ export const listMessages = /* GraphQL */ `
               email
               displayName
               photo
+              authpool
               conversations {
                 items {
                   id
@@ -867,6 +890,7 @@ export const listMessages = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -936,6 +960,7 @@ export const getMessageReaction = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -968,6 +993,7 @@ export const getMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -992,6 +1018,7 @@ export const getMessageReaction = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -1034,6 +1061,7 @@ export const listMessageReactions = /* GraphQL */ `
           email
           displayName
           photo
+          authpool
           conversations {
             items {
               id
@@ -1110,6 +1138,7 @@ export const userByUsername = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -1142,6 +1171,7 @@ export const userByUsername = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -1166,6 +1196,7 @@ export const userByUsername = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -1206,6 +1237,7 @@ export const userByEmail = /* GraphQL */ `
         email
         displayName
         photo
+        authpool
         conversations {
           items {
             id
@@ -1238,6 +1270,7 @@ export const userByEmail = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type
@@ -1262,6 +1295,7 @@ export const userByEmail = /* GraphQL */ `
                   email
                   displayName
                   photo
+                  authpool
                 }
                 content
                 type

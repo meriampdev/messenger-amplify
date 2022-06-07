@@ -1,7 +1,7 @@
 import { useState, useEffect, createContext } from "react"
 import { API, graphqlOperation } from 'aws-amplify'
 import { userByEmail as GetUser } from "graphql/queries"
-import { createUser as createUserMutation } from "graphql/mutations"
+import { createUser as CreateUser } from "graphql/mutations"
 
 export const MessengerContext = createContext(null);
 
@@ -36,7 +36,7 @@ export const MessengerProvider = ({ user, children }) => {
 
   const createUser = async (username, email) => {
     try {
-      let me = await API.graphql(graphqlOperation(createUserMutation, { input: { username, email } }))
+      let me = await API.graphql(graphqlOperation(CreateUser, { input: { username, email } }))
       setUserData(prevState => ({ ...prevState, me: me?.data?.createUser }))
     } catch (err) {
       console.log('Error creating user! :', err)
