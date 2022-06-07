@@ -90,7 +90,9 @@ export const Reactions = ({initial, messageId}) => {
             )
           })
         }
-        { reactions?.length > 1 && <Text fontSize={12} ml={1}>{reactions.length}</Text> }
+        { (reactions?.length > 1 && !(groupsArray?.length > 3)) 
+          && <Text fontSize={12} ml={1}>{reactions.length}</Text> 
+        }
         </Flex>
       </Tooltip>
     )
