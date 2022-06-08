@@ -28,6 +28,7 @@ function App() {
     return () => {
       document.removeEventListener('visibilitychange')
     }
+  // eslint-disable-next-line
   }, []);
 
   const handleActiveTab = () => {

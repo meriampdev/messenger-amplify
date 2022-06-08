@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useContext} from 'react';
+import './sidebar.css';
 import Search from 'components/Sidebar/Search';
 import ConversationItem from 'components/Sidebar/Item';
 import Toolbar from 'components/Toolbar';
 import { SettingsMenu } from "./SettingsMenu"
 import { UserList } from "./UserList"
-import './sidebar.css';
-import { API } from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
+import { UserActionsContext } from "context/useractions"
+import { conversationByEmail } from "graphql/queries"
 import { 
   onUserConversationCreate,
   onUserConversationDelete,
@@ -14,22 +16,33 @@ import {
 
 export default function Sidebar(props) {
   const messenger = useContext(MessengerContext)
+  const userAction = useContext(UserActionsContext)
   const [conversations, setConversations] = useState([]);
   const userEmail = messenger?.data?.user?.attributes?.email
   const myId = messenger?.data?.user?.me?.id
 
   useEffect(() => {
-    if(conversations?.length <= 0 && messenger?.data?.user?.me?.conversations?.items?.length > 0) {
-      let items = messenger?.data?.user?.me?.conversations?.items
-      let sorted = items.sort(function(a, b) {
-        var c = new Date(a.updatedAt);
-        var d = new Date(b.updatedAt);
-        return c-d;
-      });
-      setConversations(sorted.reverse())
+    if(!!userEmail) {
+      getConversations()
     }
   // eslint-disable-next-line
-  }, [messenger?.data])
+  }, [userEmail])
+
+  const getConversations = async () => {
+    let res = await API.graphql(graphqlOperation(conversationByEmail, 
+      { 
+        email: userEmail, 
+        limit: 10, 
+        sortDirection: "DESC" 
+      }
+    ))
+
+    if(res?.data?.conversationByEmail?.items?.length > 0) {
+      setConversations(res?.data?.conversationByEmail?.items)
+    } else {
+      setConversations([])
+    }
+  }
 
   useEffect(() => {
     if(conversations?.length > 0) {
@@ -91,6 +104,7 @@ export default function Sidebar(props) {
               data={{ ...conversation, text}}
               showOptions={true}
               onClick={() => {
+                userAction.handleSetState({ createNewConvo: false })
                 messenger?.setCurrentConvo({ 
                   ...conversation?.conversation, 
                   messages: conversation?.messages

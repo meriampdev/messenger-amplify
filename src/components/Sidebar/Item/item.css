@@ -15,6 +15,13 @@
   cursor: pointer;
 }
 
+.delete-chat-btn {
+  visibility: hidden;
+}
+.conversation-list-item:hover .delete-chat-btn {
+  visibility: visible;
+}
+
 .conversation-photo {
   min-width: 50px;
   max-width: 50px;
@@ -30,7 +37,7 @@
 
 .conversation-title {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: medium;
   margin: 0;
 }
 

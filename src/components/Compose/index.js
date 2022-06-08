@@ -8,6 +8,8 @@ export default function Compose(props) {
 
   const onSend = (content) => {
     let message = content?.trim()
+    if(!message) return 
+    
     props.handleSend(message)
     const area = document.getElementById('compose-input');
     while (area.firstChild) {

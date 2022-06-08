@@ -3,3 +3,7 @@
   padding-bottom: 70px;
   min-height: 85vh;
 }
+
+.message-list {
+  background: #FFF;
+}

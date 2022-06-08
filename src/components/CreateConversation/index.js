@@ -70,7 +70,8 @@ export default function Conversation(props) {
         conversationId: conversationId,
         content: content,
         type: "text",
-        authorId: messenger?.data?.user?.me?.id
+        authorId: messenger?.data?.user?.me?.id,
+        read: false
       }
       let message = await API.graphql(graphqlOperation(createMessage, { input: messageData }))
       let payload = { id: conversationId, recentMessageId: message?.data?.createMessage?.id }

@@ -21,10 +21,10 @@ type UserConversation
     id: ID!
     createdAt: AWSDateTime!
 	  updatedAt: AWSDateTime!
-    email: String! @index(name: "convoByEmail", sortKeyFields: ["updatedAt"])
+    email: String! @index(name: "convoByEmail", queryField: "conversationByEmail", sortKeyFields: ["updatedAt"])
     displayName: String 
     photo: String 
-    conversationId: ID!
+    conversationId: ID! @index(name: "userConvoByConvoId", queryField: "userConversationByConvoId", sortKeyFields: ["updatedAt"])
     conversation: Conversation @hasOne(fields: ["conversationId"])
     messages: [Message] @hasMany(indexName: "byConversation", fields: ["conversationId"])
   }
@@ -45,7 +45,7 @@ type Conversation
 type Message 
   @model {
     id: ID! @index(name: "byMessageId")
-    conversationId: ID! @index(name: "byConversation", sortKeyFields: ["createdAt"])
+    conversationId: ID! @index(name: "byConversation", queryField: "messagesByConversation", sortKeyFields: ["createdAt"])
     reactions: [MessageReaction] @hasMany(indexName: "messageReactions", fields: ["id"])
     authorId: ID!
     author: User @hasOne(fields: ["authorId"])

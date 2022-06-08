@@ -15,7 +15,7 @@ export default function Messenger() {
         <Sidebar />
       </div>
 
-      <Box id="content" height="100vh" overflow="hidden">
+      <Box overflow="hidden">
         {
           userAction?.state?.createNewConvo ? 
             <CreateConversation />

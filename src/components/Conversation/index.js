@@ -1,6 +1,7 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useCallback} from 'react';
 import './conversation.css';
-import { Box, VStack } from "@chakra-ui/react"
+import { Box, Center, Spinner } from "@chakra-ui/react"
+import InfiniteScroll from 'react-infinite-scroll-component'
 import Compose from 'components/Compose';
 import Toolbar from 'components/Toolbar';
 import ToolbarButton from 'components/ToolbarButton';
@@ -9,22 +10,20 @@ import moment from 'moment';
 import { API, graphqlOperation } from 'aws-amplify'
 import { MessengerContext } from "context/messenger"
 import { createMessage, updateConversation } from "graphql/mutations"
-import { listUserConversations } from "graphql/queries"
+import { messagesByConversation } from "graphql/queries"
 import { onMessageCreated } from "graphql/subscriptions"
 
 export default function Conversation(props) {
   const messenger = useContext(MessengerContext)
   const [messages, setMessages] = useState([])
+  const [nextToken, setNextToken] = useState('-')
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     let subscription
-    if(messenger?.data?.currentConvo?.id) {
-
-      if(messenger?.data?.currentConvo?.messages?.items?.length > 0) {
-        setMessages(messenger?.data?.currentConvo?.messages?.items)
-      }
-      
-      getMessages()
+    if(!!messenger?.data?.currentConvo?.id) {
+      setMessages([])
+      getMessages(true)
       subscription = API.graphql({
         query: onMessageCreated,
         variables: {
@@ -34,7 +33,7 @@ export default function Conversation(props) {
       .subscribe({
         next: messageData => {
           let data = messageData?.value?.data?.onMessageCreated
-          setMessages(prev => [ ...prev, data ])
+          setMessages(prev => [ data, ...prev ])
         }
       })
     }
@@ -44,27 +43,36 @@ export default function Conversation(props) {
   // eslint-disable-next-line
   }, [messenger?.data?.currentConvo?.id]);
 
-  const getMessages = async () => {
-    let filter = {
-      and: [
-        {conversationId: { eq: messenger?.data?.currentConvo?.id }},
-        {email: { eq: messenger?.data?.user?.me?.email } }
-      ]
+  const getMessages = useCallback(async (fresh) => {
+    if(isLoading || !messenger?.data?.currentConvo?.id) return
+
+    let payload = { 
+      conversationId: messenger?.data?.currentConvo?.id, 
+      limit: 15, 
+      sortDirection: "DESC" 
     }
-    let res = await  API.graphql(graphqlOperation(listUserConversations, { filter: filter }))
-    let items = res?.data?.listUserConversations?.items ?? []
+    if(nextToken && nextToken !== '-' && !fresh) {
+      payload = { ...payload, nextToken }
+    }
+
+    setIsLoading(true)
+    let res = await API.graphql(graphqlOperation(messagesByConversation, payload))
+    setIsLoading(false)
+
+    let items = res?.data?.messagesByConversation?.items ?? []
     if(items?.length > 0) {
-      let mlist = items[0].messages?.items
-      setMessages(mlist)
+      setNextToken(res?.data?.messagesByConversation?.nextToken)
+      setMessages(prev => (prev.concat(items)))
     }
-  }
+  }, [isLoading, nextToken, messenger?.data?.currentConvo?.id])
 
   const handleSend = async (content) => {
     const messageData = {
       conversationId: messenger?.data?.currentConvo?.id,
       content: content,
       type: "text",
-      authorId: messenger?.data?.user?.me?.id
+      authorId: messenger?.data?.user?.me?.id,
+      read: false
     }
 
     try {
@@ -87,9 +95,9 @@ export default function Conversation(props) {
     let tempMessages = [];
 
     while (i < messageCount) {
-      let previous = messages[i - 1];
+      let next = messages[i - 1];
       let current = messages[i];
-      let next = messages[i + 1];
+      let previous = messages[i + 1];
       let isMine = current.authorId === messenger?.data?.user?.me?.id;
       let currentMoment = moment(current.createdAt);
       let prevBySameAuthor = false;
@@ -124,7 +132,7 @@ export default function Conversation(props) {
 
       tempMessages.push(
         <Message
-          key={i}
+          key={current?.id}
           isMine={isMine}
           startsSequence={startsSequence}
           endsSequence={endsSequence}
@@ -137,30 +145,50 @@ export default function Conversation(props) {
       i += 1;
     }
 
-    setTimeout(() => {
-      var objDiv = document.getElementById("messages");
-      objDiv.scrollTo(0, objDiv.scrollHeight)
-    }, 100)
     return tempMessages;
   }
 
-    return(
-      <VStack id="message-list" height="100%" spacing={0}>
-        <Box w="100%">
-          <Toolbar
-            className="with-shadow"
-            title=""
-            rightItems={[<ToolbarButton key="info" icon="ion-ios-information-circle-outline" />]}
-          />
+  return(
+    <Box 
+      id="message-list" 
+      height="100%" 
+      bg="#FFF"
+    >
+      <Box w="100%">
+        <Toolbar
+          className="with-shadow"
+          title=""
+          rightItems={[<ToolbarButton key="info" icon="ion-ios-information-circle-outline" />]}
+        />
+      </Box>
+      <Box px={2} py={4} h="84vh" maxH="84vh" minH="84vh" overflow="hidden">
+        <Box 
+          h="100%" 
+          id="messages-container" 
+          overflow="auto" 
+          display="flex" 
+          flexDir="column-reverse"
+        >  
+          {messages?.length > 0 && 
+            <InfiniteScroll
+              dataLength={messages.length}
+              hasMore={!!nextToken}
+              next={getMessages}
+              inverse={true}
+              scrollableTarget="messages-container"
+              style={{ display: "flex", flexDirection: "column-reverse" }}
+              loader={
+                <Center w="100%" key={0}>
+                  <Spinner size="sm" />
+                </Center>
+              }
+            >
+              {renderMessages()}
+            </InfiniteScroll>
+          }
         </Box>
-        <Box id="messages" flex={1} maxH="100%" w="100%" overflow="scroll" bg="#FFF" px={2}>
-          <Box>
-            {renderMessages()}
-          </Box>
-        </Box>  
-        <Box w="100%">
-          <Compose handleSend={handleSend} />
-        </Box>
-      </VStack>
-    );
+      </Box>
+      <Compose handleSend={handleSend} />
+    </Box>
+  );
 }

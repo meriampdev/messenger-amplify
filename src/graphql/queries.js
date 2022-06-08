@@ -29,128 +29,9 @@ export const getUser = /* GraphQL */ `
             initiator
             members
             recentMessageId
-            recentMessage {
-              id
-              conversationId
-              reactions {
-                items {
-                  id
-                  messageId
-                  authorId
-                  reaction
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-            userConversation {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              conversation {
-                id
-                createdAt
-                updatedAt
-                name
-                initiator
-                members
-                recentMessageId
-                recentMessage {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                userConversation {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                conversationUserConversationId
-              }
-              messages {
-                items {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-            }
             conversationUserConversationId
           }
           messages {
-            items {
-              id
-              conversationId
-              reactions {
-                items {
-                  id
-                  messageId
-                  authorId
-                  reaction
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
             nextToken
           }
         }
@@ -184,87 +65,6 @@ export const listUsers = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           nextToken
         }
@@ -295,27 +95,6 @@ export const getUserConversation = /* GraphQL */ `
           id
           conversationId
           reactions {
-            items {
-              id
-              messageId
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              reaction
-              createdAt
-              updatedAt
-            }
             nextToken
           }
           authorId
@@ -328,31 +107,6 @@ export const getUserConversation = /* GraphQL */ `
             displayName
             photo
             authpool
-            conversations {
-              items {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              nextToken
-            }
           }
           content
           type
@@ -376,128 +130,9 @@ export const getUserConversation = /* GraphQL */ `
             initiator
             members
             recentMessageId
-            recentMessage {
-              id
-              conversationId
-              reactions {
-                items {
-                  id
-                  messageId
-                  authorId
-                  reaction
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-            userConversation {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              conversation {
-                id
-                createdAt
-                updatedAt
-                name
-                initiator
-                members
-                recentMessageId
-                recentMessage {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                userConversation {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                conversationUserConversationId
-              }
-              messages {
-                items {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-            }
             conversationUserConversationId
           }
           messages {
-            items {
-              id
-              conversationId
-              reactions {
-                items {
-                  id
-                  messageId
-                  authorId
-                  reaction
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
             nextToken
           }
         }
@@ -508,27 +143,6 @@ export const getUserConversation = /* GraphQL */ `
           id
           conversationId
           reactions {
-            items {
-              id
-              messageId
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              reaction
-              createdAt
-              updatedAt
-            }
             nextToken
           }
           authorId
@@ -541,31 +155,6 @@ export const getUserConversation = /* GraphQL */ `
             displayName
             photo
             authpool
-            conversations {
-              items {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              nextToken
-            }
           }
           content
           type
@@ -608,50 +197,7 @@ export const listUserConversations = /* GraphQL */ `
           recentMessage {
             id
             conversationId
-            reactions {
-              items {
-                id
-                messageId
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                reaction
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
             authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-              authpool
-              conversations {
-                items {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                nextToken
-              }
-            }
             content
             type
             read
@@ -666,87 +212,6 @@ export const listUserConversations = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           conversationUserConversationId
         }
@@ -754,50 +219,7 @@ export const listUserConversations = /* GraphQL */ `
           items {
             id
             conversationId
-            reactions {
-              items {
-                id
-                messageId
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                reaction
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
             authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-              authpool
-              conversations {
-                items {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                nextToken
-              }
-            }
             content
             type
             read
@@ -829,28 +251,6 @@ export const getConversation = /* GraphQL */ `
             id
             messageId
             authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-              authpool
-              conversations {
-                items {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                nextToken
-              }
-            }
             reaction
             createdAt
             updatedAt
@@ -868,57 +268,6 @@ export const getConversation = /* GraphQL */ `
           photo
           authpool
           conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              conversation {
-                id
-                createdAt
-                updatedAt
-                name
-                initiator
-                members
-                recentMessageId
-                recentMessage {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                userConversation {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                conversationUserConversationId
-              }
-              messages {
-                items {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-            }
             nextToken
           }
         }
@@ -947,50 +296,7 @@ export const getConversation = /* GraphQL */ `
           recentMessage {
             id
             conversationId
-            reactions {
-              items {
-                id
-                messageId
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                reaction
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
             authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-              authpool
-              conversations {
-                items {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                nextToken
-              }
-            }
             content
             type
             read
@@ -1005,87 +311,6 @@ export const getConversation = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           conversationUserConversationId
         }
@@ -1093,50 +318,7 @@ export const getConversation = /* GraphQL */ `
           items {
             id
             conversationId
-            reactions {
-              items {
-                id
-                messageId
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                reaction
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
             authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-              authpool
-              conversations {
-                items {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                nextToken
-              }
-            }
             content
             type
             read
@@ -1169,27 +351,6 @@ export const listConversations = /* GraphQL */ `
           id
           conversationId
           reactions {
-            items {
-              id
-              messageId
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              reaction
-              createdAt
-              updatedAt
-            }
             nextToken
           }
           authorId
@@ -1202,31 +363,6 @@ export const listConversations = /* GraphQL */ `
             displayName
             photo
             authpool
-            conversations {
-              items {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              nextToken
-            }
           }
           content
           type
@@ -1250,128 +386,9 @@ export const listConversations = /* GraphQL */ `
             initiator
             members
             recentMessageId
-            recentMessage {
-              id
-              conversationId
-              reactions {
-                items {
-                  id
-                  messageId
-                  authorId
-                  reaction
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
-            userConversation {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              conversation {
-                id
-                createdAt
-                updatedAt
-                name
-                initiator
-                members
-                recentMessageId
-                recentMessage {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                userConversation {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                conversationUserConversationId
-              }
-              messages {
-                items {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-            }
             conversationUserConversationId
           }
           messages {
-            items {
-              id
-              conversationId
-              reactions {
-                items {
-                  id
-                  messageId
-                  authorId
-                  reaction
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-              authorId
-              author {
-                id
-                createdAt
-                updatedAt
-                username
-                email
-                displayName
-                photo
-                authpool
-                conversations {
-                  nextToken
-                }
-              }
-              content
-              type
-              read
-              createdAt
-              updatedAt
-            }
             nextToken
           }
         }
@@ -1400,31 +417,6 @@ export const getMessage = /* GraphQL */ `
             displayName
             photo
             authpool
-            conversations {
-              items {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              nextToken
-            }
           }
           reaction
           createdAt
@@ -1451,87 +443,6 @@ export const getMessage = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           nextToken
         }
@@ -1559,28 +470,6 @@ export const listMessages = /* GraphQL */ `
             id
             messageId
             authorId
-            author {
-              id
-              createdAt
-              updatedAt
-              username
-              email
-              displayName
-              photo
-              authpool
-              conversations {
-                items {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                nextToken
-              }
-            }
             reaction
             createdAt
             updatedAt
@@ -1598,57 +487,6 @@ export const listMessages = /* GraphQL */ `
           photo
           authpool
           conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              conversation {
-                id
-                createdAt
-                updatedAt
-                name
-                initiator
-                members
-                recentMessageId
-                recentMessage {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                userConversation {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                conversationUserConversationId
-              }
-              messages {
-                items {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-            }
             nextToken
           }
         }
@@ -1686,87 +524,6 @@ export const getMessageReaction = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           nextToken
         }
@@ -1802,57 +559,6 @@ export const listMessageReactions = /* GraphQL */ `
           photo
           authpool
           conversations {
-            items {
-              id
-              createdAt
-              updatedAt
-              email
-              displayName
-              photo
-              conversationId
-              conversation {
-                id
-                createdAt
-                updatedAt
-                name
-                initiator
-                members
-                recentMessageId
-                recentMessage {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                userConversation {
-                  id
-                  createdAt
-                  updatedAt
-                  email
-                  displayName
-                  photo
-                  conversationId
-                }
-                conversationUserConversationId
-              }
-              messages {
-                items {
-                  id
-                  conversationId
-                  authorId
-                  content
-                  type
-                  read
-                  createdAt
-                  updatedAt
-                }
-                nextToken
-              }
-            }
             nextToken
           }
         }
@@ -1897,87 +603,6 @@ export const userByUsername = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           nextToken
         }
@@ -2019,90 +644,136 @@ export const userByEmail = /* GraphQL */ `
             displayName
             photo
             conversationId
-            conversation {
-              id
-              createdAt
-              updatedAt
-              name
-              initiator
-              members
-              recentMessageId
-              recentMessage {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              userConversation {
-                id
-                createdAt
-                updatedAt
-                email
-                displayName
-                photo
-                conversationId
-                conversation {
-                  id
-                  createdAt
-                  updatedAt
-                  name
-                  initiator
-                  members
-                  recentMessageId
-                  conversationUserConversationId
-                }
-                messages {
-                  nextToken
-                }
-              }
-              conversationUserConversationId
-            }
-            messages {
-              items {
-                id
-                conversationId
-                reactions {
-                  nextToken
-                }
-                authorId
-                author {
-                  id
-                  createdAt
-                  updatedAt
-                  username
-                  email
-                  displayName
-                  photo
-                  authpool
-                }
-                content
-                type
-                read
-                createdAt
-                updatedAt
-              }
-              nextToken
-            }
           }
           nextToken
         }
+      }
+      nextToken
+    }
+  }
+`;
+export const conversationByEmail = /* GraphQL */ `
+  query ConversationByEmail(
+    $email: String!
+    $updatedAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    conversationByEmail(
+      email: $email
+      updatedAt: $updatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        createdAt
+        updatedAt
+        email
+        displayName
+        photo
+        conversationId
+        conversation {
+          id
+          createdAt
+          updatedAt
+          name
+          initiator
+          members
+          recentMessageId
+          recentMessage {
+            id
+            conversationId
+            authorId
+            content
+            type
+            read
+            createdAt
+            updatedAt
+          }
+          userConversation {
+            id
+            createdAt
+            updatedAt
+            email
+            displayName
+            photo
+            conversationId
+          }
+          conversationUserConversationId
+        }
+        messages {
+          items {
+            id
+            conversationId
+            authorId
+            content
+            type
+            read
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const messagesByConversation = /* GraphQL */ `
+  query MessagesByConversation(
+    $conversationId: ID!
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByConversation(
+      conversationId: $conversationId
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        conversationId
+        reactions {
+          items {
+            id
+            messageId
+            authorId
+            reaction
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        authorId
+        author {
+          id
+          createdAt
+          updatedAt
+          username
+          email
+          displayName
+          photo
+          authpool
+          conversations {
+            nextToken
+          }
+        }
+        content
+        type
+        read
+        createdAt
+        updatedAt
       }
       nextToken
     }
